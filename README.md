@@ -9,7 +9,7 @@ A donor dashboard, where interested users can update about the materials they ar
 A receiver dashboard, where NGOs or other organizations can update their needs, according to which the materials from willing donors will be supplied to them.
 
 ## Technology Stack:
-**FRONTEND:** ReactJS
+**FRONTEND:** ReactJS  
 **BACKEND:** NodeJS, ExpressJS, MongoDB
 
 ## Contributors:
