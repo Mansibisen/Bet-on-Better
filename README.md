@@ -1,7 +1,13 @@
-# Inout
-A website which facilitates the process of donating materials to needy people around one's neighbourhood. We strongly believe on ideas of  charity begins at home. In other words, it begins in the near neighbourhoods of a person. One first comes forward to help his neighbours, neeedy people in surroundings in the very beginning. Afterwards, he extends his, same helping hand to the distant places, where thousands of the needy and the weak people await his help and sympathy.At our interface a doner is free to donate the stuff he want to the nearest neighboorhood possible . Reciever can then accept the request of donation . There is no restriction on materials doner can donate old goods , clothes  to food etc.
+# Bet on Better
+A website which facilitates the process of donating materials to needy people around one's neighborhood. 
 
-## Overview
+## Idea:
+We strongly believe in the idea of charity begins at home. In other words, it commences in the near neighborhoods of a person. One first comes forward to help his neighbors, needy people in surroundings in the very beginning. Afterward, he extends his same helping hand to the distant places, where thousands of the needy and the weak people await his help and sympathy. 
+
+## Overview:
+At our interface, a donor is free to donate the stuff he wants to the nearest neighborhood possible. The receiver can then accept the request for a donation. There is no restriction on materials a donor can donate. It can be old goods, clothes, food, etc.
+
+## Execution:
 **DONOR:**
 A donor dashboard, where interested users can update about the materials they are willing to donate. The interface will also locate the nearby orphanages/NGOs for them to connect.
 
