@@ -10,6 +10,9 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
+//Passport config
+require("./routes/passport-config")(passport);
+
 //DB config
 const db = process.env.MONGO_URI;
 
