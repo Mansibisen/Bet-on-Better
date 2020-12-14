@@ -8,7 +8,7 @@ We strongly believe in the idea of charity begins at home. In other words, it co
 At our interface, a donor is free to donate the stuff he wants to the nearest neighborhood possible. The receiver can then accept the request for a donation. There is no restriction on materials a donor can donate. It can be old goods, clothes, food, etc.
 
 ## Execution:
-<img src="Screenshot (277).png" alt="homepage"/>
+<img src="Screenshot (282).png" alt="homepage"/>
 **DONOR:**
 A donor dashboard, where interested users can update about the materials they are willing to donate. The interface will also locate the nearby orphanages/NGOs for them to connect.
 <img src="Screenshot (281).png" alt="donerDashboard"/>
