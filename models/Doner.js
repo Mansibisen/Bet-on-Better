@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-const CharitySchema = new mongoose.Schema({
-    userName: {
+const DonerSchema = new mongoose.Schema({
+    name: {
         type: String,
         required: true,
     },
@@ -33,18 +33,6 @@ const CharitySchema = new mongoose.Schema({
             required: true,
         },
     ],
-
-    location: {
-        type: Array,
-        required: true,
-    },
-    requirements: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Requirement",
-            required: true,
-        },
-    ],
 });
 
-module.exports = mongoose.model("Charity", CharitySchema);
+module.exports = mongoose.model("Doner", DonerSchema);
