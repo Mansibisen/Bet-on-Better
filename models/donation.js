@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const DonationtSchema = new mongoose.Schema({
     DonatedBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Doner",
+        ref: "Donor",
         required: true,
     },
     DonatedTo: {

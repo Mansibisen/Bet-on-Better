@@ -35,4 +35,4 @@ const DonerSchema = new mongoose.Schema({
     ],
 });
 
-module.exports = mongoose.model("Doner", DonerSchema);
+module.exports = mongoose.model("Donor", DonerSchema);
