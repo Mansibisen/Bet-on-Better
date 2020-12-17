@@ -5,6 +5,7 @@ const passport = require('passport');
 
 //User model
 const User = require('../models/User');
+const Charity = require('../models/Charity');
 
 //Register handle
 router.post('/register', function(req, res) {
