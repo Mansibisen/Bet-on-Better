@@ -49,6 +49,7 @@ app.use(passport.session());
 //Routes
 app.use("/", require("./routes/index"));
 app.use("/charity", require("./routes/charity"));
+app.use("/donor",require("./routes/donor"));
 //Listening on localhost:5000 or environment variable PORT
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, function () {
