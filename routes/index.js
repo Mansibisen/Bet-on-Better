@@ -4,8 +4,16 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 
 //User model
-//const User = require('../models/User');
-//const Charity = require('../models/Charity');
+const Donor = require("../models/Donor");
+const Charity = require("../models/Charity");
+
+router.get("/login", function (req, res) {
+  res.render("login");
+});
+
+router.get("/register", function (req, res) {
+  res.render("register");
+});
 
 //Register handle
 router.post("/register", function (req, res) {
@@ -36,57 +44,133 @@ router.post("/register", function (req, res) {
   }
 
   if (errors.length > 0) {
-    console.log(errors);
+    res.render("register", {
+      errors,
+      name,
+      email,
+      password,
+      password2,
+      address,
+      contact,
+      role,
+    });
   } else {
     //Validation passed
-    User.findOne({ email: email }).then(function (user) {
-      if (user) {
-        //User exists
-        errors.push({ msg: "Email is already registered" });
-      } else {
-        const newUser = new User({
-          name,
-          email,
-          password,
-          address,
-          contact,
-          role,
-        });
-
-        //Hash password
-        bcrypt.genSalt(10, function (err, salt) {
-          bcrypt.hash(newUser.password, salt, function (err, hash) {
-            if (err) throw err;
-
-            //Set password to hashed
-            newUser.password = hash;
-
-            newUser
-              .save()
-              .then(function (user) {
-                res.redirect("/login");
-              })
-              .catch(function (err) {
-                console.log(err);
-              });
+    if (role === "donor") {
+      //Donor db
+      Donor.findOne({ email: email }).then(function (user) {
+        if (user) {
+          //User exists
+          errors.push({ msg: "Email is already registered" });
+          res.render("register", {
+            errors,
+            name,
+            email,
+            password,
+            password2,
+            address,
+            contact,
+            role,
           });
-        });
-      }
-    });
+        } else {
+          const newUser = new Donor({
+            name,
+            email,
+            password,
+            address,
+            contact,
+            role,
+          });
+
+          //Hash password
+          bcrypt.genSalt(10, function (err, salt) {
+            bcrypt.hash(newUser.password, salt, function (err, hash) {
+              if (err) throw err;
+
+              //Set password to hashed
+              newUser.password = hash;
+
+              newUser
+                .save()
+                .then(function (user) {
+                  req.flash(
+                    "success_msg",
+                    "Signup is successful and you can login!"
+                  );
+                  res.redirect("/login");
+                })
+                .catch(function (err) {
+                  console.log(err);
+                });
+            });
+          });
+        }
+      });
+    } else {
+      //Charity db
+      Charity.findOne({ email: email }).then(function (user) {
+        if (user) {
+          //User exists
+          errors.push({ msg: "Email is already registered" });
+          res.render("register", {
+            errors,
+            name,
+            email,
+            password,
+            password2,
+            address,
+            contact,
+            role,
+          });
+        } else {
+          const newUser = new Charity({
+            name,
+            email,
+            password,
+            address,
+            contact,
+            role,
+          });
+
+          //Hash password
+          bcrypt.genSalt(10, function (err, salt) {
+            bcrypt.hash(newUser.password, salt, function (err, hash) {
+              if (err) throw err;
+
+              //Set password to hashed
+              newUser.password = hash;
+
+              newUser
+                .save()
+                .then(function (user) {
+                  req.flash(
+                    "success_msg",
+                    "Signup is successful and you can login!"
+                  );
+                  res.redirect("/login");
+                })
+                .catch(function (err) {
+                  console.log(err);
+                });
+            });
+          });
+        }
+      });
+    }
   }
 });
 
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", {
-    successRedirect: "/",
+    successRedirect: "/register",
     failureRedirect: "/login",
-    failureFlash: false,
+    failureFlash: true,
   })(req, res, next);
 });
 
 router.get("/logout", (req, res) => {
   req.logout();
-  res.status(200).send({ message: "Logged-Out" });
+  req.flash("success_msg", "You are logged out!");
   res.redirect("/login");
 });
 

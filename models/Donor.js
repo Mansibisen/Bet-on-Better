@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const DonerSchema = new mongoose.Schema({
+const DonorSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -35,4 +35,4 @@ const DonerSchema = new mongoose.Schema({
   ],
 });
 
-module.exports = mongoose.model("Donor", DonerSchema);
+module.exports = mongoose.model("Donor", DonorSchema);
