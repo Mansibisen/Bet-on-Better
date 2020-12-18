@@ -30,6 +30,10 @@ mongoose
     console.log(err);
   });
 
+//View Engine
+app.set('view engine','ejs');
+app.use(express.static('public'));
+
 //Body Parser
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());

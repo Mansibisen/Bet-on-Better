@@ -1,0 +1,49 @@
+<%- include ('partials/header'); -%> 
+<%- include ('partials/donorNav'); -%> 
+
+
+<div>
+    <%= info.userName %>
+</div>
+
+<div>
+    <h2>Requirements</h2>
+    
+    <ul>
+    <% info.requirements.forEach(item=>{ %>
+   
+        <li>
+            <h4><%=item.material %> : <%=item.quantity %></h4>
+            <p><%= item.description %></p>
+        </li>
+
+    <%  }) %>
+
+    </ul>
+</div>
+
+<button id="donateBtn">Donate</button>
+<br>
+<hr>
+<br>
+
+<div id="donationBox">
+    <h3>Donation</h3>
+    <form id="donationForm">
+
+    </form>
+    <button id="addItem">+ Add Item to donate</button>
+</div>
+
+<script>
+    const addItem=document.getElementById("addItem");
+    const donateBtn=document.getElementById("donateBtn");
+
+    donateBtn.addEventListener('click',()=>{
+        document.getElementById("donationBox").style.display="block";
+    })
+    
+
+
+</script>
+

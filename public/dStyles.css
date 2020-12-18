@@ -1,0 +1,35 @@
+#header {
+    display: block;
+    margin-bottom: 40px;
+    width: 100%;
+    background-color: #FEE996;
+    border-bottom: 2px solid black;
+
+}
+
+.navtitle{
+  font-size: 2em;
+}
+
+#mapid{
+    height: 500px;
+    width: 70%;
+}
+
+#dash-nav{
+    width: fit-content;
+}
+
+#searchbar{
+    width: 75%;
+    height: 60px;
+  }
+
+/* #search-container{
+    display: none;
+} */
+
+ #donationBox{
+    display: none;
+} 
+  

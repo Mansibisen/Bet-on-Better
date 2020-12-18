@@ -6,10 +6,18 @@ const Donor= require('../models/Donor');
 
 //router.get('/donor/profile',async(req,res)=>{})
 
+router.get('/',(req,res)=>{
+    res.render('donorDash');
+})
+
+router.get('/profile',(req,res)=>{
+    res.render('donorProfile');
+})
+
 router.get('/charities/all', async(req,res)=>{
     try{
         let allchar;
-        allchar = await Charity.find({});
+        allchar = await Charity.find();
         return res
                 .status(200)
                 .json({data: allchar});
@@ -43,10 +51,11 @@ router.get('/charityPage/:id', async(req,res)=>{
     try{
         let char;
         let chID=req.params.id;
-        char = await Charity.findById({chID});
+        char = await Charity.findById(chID);
+        console.log(char);
         return res
                 .status(200)
-                .json({data: char});
+                .render('donorCharityPage',{info: char});
     }
     catch(e){
         console.log(e);
