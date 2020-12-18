@@ -1,0 +1,52 @@
+<% include partials/header %> 
+
+<div>
+    <ul>
+        <li>
+            <a href="dashboard">Home</a>
+        </li>
+        <li>
+            <a href="Add">ADD</a>
+        </li>
+
+        <li style=' float: "right" '>
+            <a class="active" href="#about">
+                About
+            </a>
+        </li>
+    </ul>
+    <br></br>
+    <div class="container">
+        <% var max = data.length %>
+        <% for( var i=0; i< max; i++){%>
+        <div class="item">
+            <h1><%=data[i].material%></h1>
+            <h3><%=data[i].quantity%></h3>
+            <p><%=data[i].description%></p>
+            <button
+                type="button"
+                class="btn btn-outline-danger"
+            >
+                Delete
+            </button>
+
+            <a href="/update">
+                <button
+                    type="button"
+                    class="btn btn-outline-warning"
+                >
+                    Update
+                </button>
+            </a>
+        </div>
+        <%}%>
+    </div>
+    
+</div>
+
+
+
+
+
+
+<% include partials/footer %>
