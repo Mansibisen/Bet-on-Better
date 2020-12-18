@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const CharitySchema = new mongoose.Schema({
-  userName: {
+  name: {
     type: String,
     required: true,
   },
