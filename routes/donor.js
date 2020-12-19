@@ -3,10 +3,12 @@ const { isValidObjectId } = require("mongoose");
 const router = express.Router();
 const Charity = require("../models/Charity");
 const Donor = require("../models/Donor");
+const { isLoggedIn } = require("../middlewares/fixers");
 
 //router.get('/donor/profile',async(req,res)=>{})
 
-router.get("/", (req, res) => {
+router.get("/", isLoggedIn, (req, res) => {
+	console.log({donorSession: req.session.passport.user});
     res.render("donorDash");
 });
 router.get("/login", function (req, res) {

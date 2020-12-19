@@ -6,11 +6,10 @@ const passport = require("passport");
 //User model
 const Donor = require("../models/Donor");
 const Charity = require("../models/Charity");
+
 router.get("/", async (req, res) => {
     res.render("homepage");
 });
-
-
 
 router.get("/register", function (req, res) {
     res.render("register");
@@ -177,27 +176,27 @@ router.post("/register", function (req, res) {
     }
 });
 
-router.post("/login", (req, res, next) => {
-    let succes,
-        email = req.body.email;
+router.post("/donor/login", (req, res, next) => {
+    passport.authenticate("donor", {
+        successRedirect: "/donor/",
+        failureRedirect: "/donor/login/",
+        failureFlash: true,
+    })(req, res, next);
+});
 
-    Donor.findOne({ email }, (err, user) => {
-        if (err) return next(err);
-        if (!user) succes = "/charity/";
-        else succes = "/donor/";
-
-        passport.authenticate("local", {
-            successRedirect: succes,
-            failureRedirect: "/login",
-            failureFlash: true,
-        })(req, res, next);
-    });
+router.post("/charity/login", (req, res, next) => {
+    passport.authenticate("charity", {
+        successRedirect: "/charity/",
+        failureRedirect: "/charity/login/",
+        failureFlash: true,
+    })(req, res, next);
 });
 
 router.get("/logout", (req, res) => {
     req.logout();
     req.flash("success_msg", "You are logged out!");
-    res.redirect("/login");
+    if (req.baseUrl == "/charity") res.redirect("/charity/login");
+    else res.redirect("/donor/login");
 });
 
 module.exports = router;

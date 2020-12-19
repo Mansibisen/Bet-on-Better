@@ -7,13 +7,21 @@ const Requirement = require("../models/Requirements");
 const Donation = require("../models/Donation");
 const { isValidObjectId } = require("mongoose");
 const { isLoggedIn } = require("../middlewares/fixers");
+
+/*router.get("/", isLoggedIn, (req, res) => {
+    console.log({ charitySession: req.session.passport.user });
+    res.render("charityDashboard");
+});*/
+
 router.get("/login", function (req, res) {
     res.render("CharityLogin");
 });
 router.get("/requirements", isLoggedIn, async (req, res) => {
+    console.log({ charitySession: req.session.passport.user });
     try {
         let user = req.user;
-        let totalRequirementsID = user.requirement;
+        console.log(user);
+        let totalRequirementsID = user.requirements;
         let value;
         let totalRequirements = [];
         if (totalRequirementsID.length > 0) {
@@ -50,6 +58,7 @@ router.get("/", isLoggedIn, async (req, res) => {
         let totalDonationsID = user.donation;
         let value;
         let totalDonation = [];
+        console.log("ids", totalDonationsID);
         if (totalDonationsID.length > 0) {
             await totalDonationsID.forEach(async (donation, index) => {
                 value = await Donation.findById(donation);
@@ -57,13 +66,17 @@ router.get("/", isLoggedIn, async (req, res) => {
                 if (index === totalDonationsID.length - 1) {
                     /*return res.status(200).json({
             result: totalDonation,
-          });*/
+          });*/ console.log(
+                        "from route ",
+                        totalDonation
+                    );
                     return res.render("charityDashboard", {
                         data: totalDonation,
                     });
                 }
             });
         } else {
+            console.log("from route ", totalDonation);
             //return res.status(200).json({ result: totalDonation });
             return res.render("charityDashboard", { data: totalDonation });
         }
