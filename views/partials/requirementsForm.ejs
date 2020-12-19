@@ -1,0 +1,43 @@
+<div class="form-group">
+  <label for="material"> Material Name </label>
+  <input
+    type="text"
+    name="material"
+    id="material"
+    class="form-control"
+    placeholder="Enter material name"
+    required
+    value="<%= requirement.material %>"
+  />
+</div>
+
+<div class="form-group">
+  <label for="description"> Material Description </label>
+  <textarea
+    name="description"
+    id="description"
+    class="form-control"
+    placeholder="Enter material description"
+    required
+  >
+<%= requirement.description %></textarea
+  >
+</div>
+
+<div class="form-group">
+  <label for="quantity"> Quantity </label>
+  <input
+    type="number"
+    name="quantity"
+    id="quantity"
+    class="form-control"
+    placeholder="Enter the quantity"
+    required
+    value="<%= requirement.quantity %>"
+  />
+</div>
+
+<button class="btn btn-success btn-lg mr-2">Submit</button>
+<a href="/charity/requirements" class="btn btn-dark btn-lg mt-4 d-inline">
+  Cancel
+</a>

@@ -1,3 +1,4 @@
+<%- include('./partials/messages.ejs'); %>
 <%-include("partials/header.ejs")%>
 <link rel="stylesheet" href="/CharityRequirements.css">
 <div>
@@ -6,7 +7,7 @@
             <a href="dashboard">Home</a>
         </li>
         <li>
-            <a href="Add">ADD</a>
+            <a href="requirements/add">ADD</a>
         </li>
 
         <li style=' float: "right" '>
@@ -23,21 +24,10 @@
             <h1><%=data[i].material%></h1>
             <h3><%=data[i].quantity%></h3>
             <p><%=data[i].description%></p>
-            <button
-                type="button"
-                class="btn btn-outline-danger"
-            >
-                Delete
-            </button>
-
-            <a href="/update">
-                <button
-                    type="button"
-                    class="btn btn-outline-warning"
-                >
-                    Update
-                </button>
-            </a>
+            <a href="/charity/requirements/update/<%= data[i].id %>" class="btn btn-info btn-lg mr-2">Update</a>
+            <form action="/charity/<%= data[i].id %>?_method=DELETE" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-danger btn-lg">Delete</button>
+            </form>
         </div>
         <%}%>
     </div>
