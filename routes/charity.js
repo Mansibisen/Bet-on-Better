@@ -7,6 +7,10 @@ const Requirement = require("../models/Requirements");
 const Donation = require("../models/Donation");
 const { isValidObjectId } = require("mongoose");
 
+router.get("/", (req, res) => {
+	res.render("charityDashboard");
+});
+
 router.get("/requirements", async (req, res) => {
     try {
         let user = req.body;
