@@ -6,14 +6,15 @@ const Charity = require("../models/Charity");
 const Requirement = require("../models/Requirements");
 const Donation = require("../models/Donation");
 const { isValidObjectId } = require("mongoose");
+const { isLoggedIn } = require("../middlewares/fixers");
 
 router.get("/", (req, res) => {
 	res.render("charityDashboard");
 });
 
-router.get("/requirements", async (req, res) => {
+router.get("/requirements", isLoggedIn, async (req, res) => {
     try {
-        let user = req.body;
+        let user = req.user;
         let totalRequirementsID = user.requirement;
         let value;
         let totalRequirements = [];
@@ -45,9 +46,9 @@ router.get("/requirements", async (req, res) => {
     }
 });
 
-router.get("/donation", async (req, res) => {
+router.get("/donation", isLoggedIn, async (req, res) => {
     try {
-        let user = req.body;
+        let user = req.user;
         let totalDonationsID = user.donation;
         let value;
         let totalDonation = [];
