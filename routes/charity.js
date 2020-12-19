@@ -7,6 +7,12 @@ const Requirement = require("../models/Requirements");
 const Donation = require("../models/Donation");
 const { isValidObjectId } = require("mongoose");
 const { isLoggedIn } = require("../middlewares/fixers");
+
+router.get("/", isLoggedIn, (req, res) => {
+	console.log({charitySession: req.session.passport.user});
+	res.render("charityDashboard");
+});
+
 router.get("/login", function (req, res) {
     res.render("CharityLogin");
 });
