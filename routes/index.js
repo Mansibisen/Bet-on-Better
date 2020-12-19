@@ -111,7 +111,7 @@ router.post("/register", function (req, res) {
                                             "success_msg",
                                             "Signup is successful and you can login!"
                                         );
-                                        res.redirect("/login");
+                                        res.redirect("/donor/login");
                                     })
                                     .catch(function (err) {
                                         console.log(err);
@@ -165,7 +165,7 @@ router.post("/register", function (req, res) {
                                             "success_msg",
                                             "Signup is successful and you can login!"
                                         );
-                                        res.redirect("/login");
+                                        res.redirect("/charity/login");
                                     })
                                     .catch(function (err) {
                                         console.log(err);
@@ -180,19 +180,20 @@ router.post("/register", function (req, res) {
 });
 
 router.post("/login", (req, res, next) => {
-  let succes, email = req.body.email;
+    let succes,
+        email = req.body.email;
 
-  Donor.findOne({ email }, (err, user) => {
-	  if(err) return next(err);
-	  if(!user) succes = "/charity/";
-	  else succes = "/donor/";
+    Donor.findOne({ email }, (err, user) => {
+        if (err) return next(err);
+        if (!user) succes = "/charity/";
+        else succes = "/donor/";
 
-	  passport.authenticate("local", {
-		successRedirect: succes,
-		failureRedirect: "/login",
-		failureFlash: true,
-	  })(req, res, next);
-  });
+        passport.authenticate("local", {
+            successRedirect: succes,
+            failureRedirect: "/login",
+            failureFlash: true,
+        })(req, res, next);
+    });
 });
 
 router.get("/logout", (req, res) => {

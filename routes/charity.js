@@ -7,11 +7,9 @@ const Requirement = require("../models/Requirements");
 const Donation = require("../models/Donation");
 const { isValidObjectId } = require("mongoose");
 const { isLoggedIn } = require("../middlewares/fixers");
-
-router.get("/", (req, res) => {
-	res.render("charityDashboard");
+router.get("/login", function (req, res) {
+    res.render("CharityLogin");
 });
-
 router.get("/requirements", isLoggedIn, async (req, res) => {
     try {
         let user = req.user;
@@ -46,7 +44,7 @@ router.get("/requirements", isLoggedIn, async (req, res) => {
     }
 });
 
-router.get("/donation", isLoggedIn, async (req, res) => {
+router.get("/", isLoggedIn, async (req, res) => {
     try {
         let user = req.user;
         let totalDonationsID = user.donation;
