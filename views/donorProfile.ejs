@@ -1,28 +1,29 @@
 <%- include('./partials/donorNav'); %>
+<div class="container">
+	<div>
+		<h3>Name: <%= data.basic.name %></h3>
+	</div>
 
-<div>
-    <h3>Name: <%= data.basic.name %></h3>
-</div>
+	<div>
+		<h3>Past Donations</h3>
 
-<div>
-    <h3>Past Donations</h3>
+		<div id="pastDonations">
 
-    <div id="pastDonations">
+			<% if(data.details.length > 0) { %>
+			<ul>
+				<% data.details.forEach(detail => { %>
+					<li>
+						<h3><%=detail.DonatedTo %> - <%= detail.date %> </h3>
+						<p> <%= detail.material %> : <%= detail.quantity %>
+					</li>
+				<% }) %>
+			</ul>
+			<% } else { %>
+				<h4 class="text-danger">No Donations</h4>
+			<% } %>
+		</div>
 
-		<% if(data.details.length > 0) { %>
-		<ul>
-			<% data.details.forEach(detail => { %>
-				<li>
-					<h3><%=detail.DonatedTo %> - <%= detail.date %> </h3>
-                    <p> <%= detail.material %> : <%= detail.quantity %>
-				</li>
-			<% }) %>
-		</ul>
-		<% } else { %>
-			<h4 class="text-danger">No Donations</h4>
-		<% } %>
-    </div>
-
+	</div>
 </div>
 
 <%-include("partials/footer.ejs")%>

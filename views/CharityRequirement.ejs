@@ -1,33 +1,32 @@
 <%- include('./partials/messages.ejs'); %>
 <%- include("./partials/charityNav.ejs"); %>
 
-<% if(data.length == 0) { %>
-  <h4 class="mt-4 text-center"> There are no requirements as of now! <a href="/charity/requirements/add"> Add a requirement? </a> </h4>
-<% } %>
+<div class="container">
+    <% if(data.length == 0) { %>
+      <h4 class="mt-4 text-center"> There are no requirements as of now! <a href="/charity/requirements/add"> Add a requirement? </a> </h4>
+    <% } %>
 
-<% data.forEach(function (datum) { %>
+    <% data.forEach(function (datum) { %>
 
-    <div class="card mt-4 mb-4 border-dark">
-      <h3 class="card-header text-center">
-        <%= datum.material %>
-      </h3>
-        <div class="card-body" style="background-color: aliceblue;">
-          <div class="card-title mb-4"> Description: <strong> <%= datum.description %> </strong> </div>
-          <div class="card-title mb-4"> Quantity: <strong> <%= datum.quantity %> </strong> </div>
-          <br> <hr>
-          <a href="/charity/requirements/update/<%= datum.id %>" class="btn btn-info btn-lg mr-2">Update</a>
-          <form action="/charity/<%= datum.id %>?_method=DELETE" method="POST" class="d-inline">
-              <button type="submit" class="btn btn-danger btn-lg">Delete</button>
-          </form>
+        <div class="card mt-4 mb-4 border-dark">
+          <h3 class="card-header text-center">
+            <%= datum.material %>
+          </h3>
+            <div class="card-body" style="background-color: aliceblue;">
+              <div class="card-title mb-4"> Description: <strong> <%= datum.description %> </strong> </div>
+              <div class="card-title mb-4"> Quantity: <strong> <%= datum.quantity %> </strong> </div>
+              <br> <hr>
+              <a href="/charity/requirements/update/<%= datum.id %>" class="btn btn-info btn-lg mr-2">Update</a>
+              <form action="/charity/<%= datum.id %>?_method=DELETE" method="POST" class="d-inline">
+                  <button type="submit" class="btn btn-danger btn-lg">Delete</button>
+              </form>
+            </div>
+            <div class="card-footer mb-2"> Added on : <strong> <%= datum.createdDate.toLocaleDateString() %> </strong>
+              <div class="float-right"> Added by: <strong> You </strong> </div>
+            </div>
         </div>
-        <div class="card-footer mb-2"> Added on : <strong> <%= datum.createdDate.toLocaleDateString() %> </strong>
-          <div class="float-right"> Added by: <strong> You </strong> </div>
-        </div>
-    </div>
 
-<% }) %>
-
-
-
+    <% }) %>
+</div>
 
 <%-include("partials/footer.ejs")%>

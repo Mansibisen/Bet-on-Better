@@ -1,135 +1,137 @@
 <%- include('./partials/donorNav'); %> 
 
-<div id="dash-nav" class="mx-auto">
-    <span><button id="all-loc">All Locations</button></span>
-    <span><button id="search">Search</button></span>
-</div>
-
-<div id="mapid" class="mx-auto my-3"></div>
-
-<div id="search-container" class="my-4">
-
-    <div id="searchbar-container" class="mx-auto">
-        <input type="text" class="mx-auto" id="searchbar" placeholder="Enter your search query"> 
-    </div> 
-
-    <div id="searchresults" class="mx-auto my-3">
-      <h3 class="row-name">Search Results</h3>            
-      <div class="row" id="matchlist"></div>
+<div class="container">
+    <div id="dash-nav" class="mx-auto">
+        <span><button id="all-loc">All Locations</button></span>
+        <span><button id="search">Search</button></span>
     </div>
 
-</div>
+    <div id="mapid" class="mx-auto my-3"></div>
+
+    <div id="search-container" class="my-4">
+
+        <div id="searchbar-container" class="mx-auto">
+            <input type="text" class="mx-auto" id="searchbar" placeholder="Enter your search query"> 
+        </div> 
+
+        <div id="searchresults" class="mx-auto my-3">
+        <h3 class="row-name">Search Results</h3>            
+        <div class="row" id="matchlist"></div>
+        </div>
+
+    </div>
 
 
-<script>
+    <script>
 
-    const searchBtn=document.getElementById("search");
-    const allBtn=document.getElementById("all-loc");
-    const mapContainer=document.getElementById("mapid");
-    const searchContainer=document.getElementById("search-container");
+        const searchBtn=document.getElementById("search");
+        const allBtn=document.getElementById("all-loc");
+        const mapContainer=document.getElementById("mapid");
+        const searchContainer=document.getElementById("search-container");
 
-    function toggleWindow(){
-        console.log("click");
-        if(mapContainer.style.display=="none"){
-            mapContainer.style.display=="block";
-            searchContainer.style.display=="none"
+        function toggleWindow(){
+            console.log("click");
+            if(mapContainer.style.display=="none"){
+                mapContainer.style.display=="block";
+                searchContainer.style.display=="none"
+            }
+            else{
+                mapContainer.style.display=="none";
+                searchContainer.style.display=="block"
+            }
         }
-        else{
-            mapContainer.style.display=="none";
-            searchContainer.style.display=="block"
+
+        searchBtn.addEventListener('click',()=>{toggleWindow();});
+        allBtn.addEventListener('click',()=>{toggleWindow();});
+
+        //Map
+
+        var mymap = L.map('mapid').setView([13.0827, 80.2707], 13);
+
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoiYXJuYXZtZW5vbiIsImEiOiJja2l1ZjVpMngwOTd5MnptZTdvcHNvN211In0.gvEFhCARcSf-VHl3W1XGRA'
+        }).addTo(mymap);
+
+        let locations=[];
+        let markers=[];
+
+        const getLocations= async ()=>{
+            const res=await fetch(`/donor/charities/all`);
+            locations=await res.json();
+            outputMarkers(locations.data); 
         }
-    }
 
-    searchBtn.addEventListener('click',()=>{toggleWindow();});
-    allBtn.addEventListener('click',()=>{toggleWindow();});
-
-    //Map
-
-    var mymap = L.map('mapid').setView([13.0827, 80.2707], 13);
-
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1,
-    accessToken: 'pk.eyJ1IjoiYXJuYXZtZW5vbiIsImEiOiJja2l1ZjVpMngwOTd5MnptZTdvcHNvN211In0.gvEFhCARcSf-VHl3W1XGRA'
-    }).addTo(mymap);
-
-    let locations=[];
-    let markers=[];
-
-    const getLocations= async ()=>{
-        const res=await fetch(`/donor/charities/all`);
-        locations=await res.json();
-        outputMarkers(locations.data); 
-    }
-
-    const outputMarkers= points =>{
-        if(points.length>0){
-            points.forEach( element => {
-                var m = L.marker([element.location[0], element.location[1]]).addTo(mymap);
-                m.bindPopup(`<h3><a href="/donor/charityPage/${element._id}">${element.userName}</a></h3>`); 
-                markers.push(m);
-            });
+        const outputMarkers= points =>{
+            if(points.length>0){
+                points.forEach( element => {
+                    var m = L.marker([element.location[0], element.location[1]]).addTo(mymap);
+                    m.bindPopup(`<h3><a href="/donor/charityPage/${element._id}">${element.userName}</a></h3>`); 
+                    markers.push(m);
+                });
+            }
         }
-    }
 
-    var m2 = L.marker([13.0827, 80.2707]).addTo(mymap);
-    m2.bindPopup("<h2>Example marker</h2><p>Will be removed at the end</p>");  
+        var m2 = L.marker([13.0827, 80.2707]).addTo(mymap);
+        m2.bindPopup("<h2>Example marker</h2><p>Will be removed at the end</p>");  
 
-    //search bar
+        //search bar
 
-    const search=document.getElementById("searchbar");
-    const matchList=document.getElementById("matchlist");
-  
-    const searchUsers=async searchText=>{
+        const search=document.getElementById("searchbar");
+        const matchList=document.getElementById("matchlist");
+    
+        const searchUsers=async searchText=>{
 
-      let matches=[];
+        let matches=[];
 
-      if(searchText.length!=0)
-      { const res=await fetch(`/donor/charities/${searchText}`);
-        matches=await res.json();
-        console.log(matches);
-      }
+        if(searchText.length!=0)
+        { const res=await fetch(`/donor/charities/${searchText}`);
+            matches=await res.json();
+            console.log(matches);
+        }
 
-      if(searchText.length===0){
-          matches=[];   
-          matchList.innerHTML='';
-      }
-
-      outputHtml(matches.data); 
-    }; 
-
-
-      const outputHtml= matches=>{
-          if(matches.length>0){
-              const html=matches.map(
-                  match=>`
-                  <div class="col-lg-3 my-1" onclick="window.location.href='/product/${match._id}'">
-                  <div class="card border-dark">
-                    <img src=${match.url} width="500" height="300" id="card-img" class="card-img-top img-fluid" onerror="this.onerror=null; this.src='https://cdn.jpegmini.com/user/images/slider_puffin_jpegmini_mobile.jpg'">
-                    <div class="card-block bg-dark text-white px-4">
-                      <h3 class="card-title">${match.userName}</h3>  
-                    </div>
-                  </div>
-                  </div> 
-                 `
-              ).join('');
-
-              matchList.innerHTML=html;
-          }
-          else{
+        if(searchText.length===0){
             matches=[];   
             matchList.innerHTML='';
+        }
 
-          }
-      };
-
-    
-    getLocations();  
-    search.addEventListener('input', ()=>{console.log(search.value);searchUsers(search.value)});
+        outputHtml(matches.data); 
+        }; 
 
 
-</script>
+        const outputHtml= matches=>{
+            if(matches.length>0){
+                const html=matches.map(
+                    match=>`
+                    <div class="col-lg-3 my-1" onclick="window.location.href='/product/${match._id}'">
+                    <div class="card border-dark">
+                        <img src=${match.url} width="500" height="300" id="card-img" class="card-img-top img-fluid" onerror="this.onerror=null; this.src='https://cdn.jpegmini.com/user/images/slider_puffin_jpegmini_mobile.jpg'">
+                        <div class="card-block bg-dark text-white px-4">
+                        <h3 class="card-title">${match.userName}</h3>  
+                        </div>
+                    </div>
+                    </div> 
+                    `
+                ).join('');
+
+                matchList.innerHTML=html;
+            }
+            else{
+                matches=[];   
+                matchList.innerHTML='';
+
+            }
+        };
+
+        
+        getLocations();  
+        search.addEventListener('input', ()=>{console.log(search.value);searchUsers(search.value)});
+
+
+    </script>
+</div>
 <%-include("partials/footer.ejs")%>
