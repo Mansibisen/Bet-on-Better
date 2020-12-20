@@ -1,32 +1,34 @@
 <%- include('./partials/messages.ejs')%>
 <%- include("./partials/charityNav.ejs"); %>
-   
-    <div style="height: 80%;" class="DonationRequests">
-        <% var max = data.length %>
-        <% for( var i=0; i< max; i=i+4){%>
-        <div Class="row">
-            <% for( var j=i; j< i+4; j++){%>
-            <div class="col-sm-3">
-                <div class="card" style=" width: '20rem' " >
-                    <img
-                        src="https://source.unsplash.com/400x400/?poor"
-                        class="card-img-top"
-                        alt="..."
-                    />
-                    <div class="card-body">
-                        <h5 class="card-title"><%=data[j].DonatedBy%></h5>
-                        <div class="card-text">
-                            <h6><%=data[j].material%></h6>
-                            <h6><%=data[j].quantity%></h6>
-                            <p><%=data[j].description%></p>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-            <%}%>
-        </div>
-        <%}%>
+   <div class="container wrapper">
+      <div style="height: 80%;" class="DonationRequests">
+          <% var max = data.length %>
+          <% for( var i=0; i< max; i=i+4){%>
+          <div Class="row">
+              <% for( var j=i; j< i+4; j++){%>
+              <div class="col-sm-3">
+                  <div class="card" style=" width: '20rem' " >
+                      <img
+                          src="https://source.unsplash.com/400x400/?poor"
+                          class="card-img-top"
+                          alt="..."
+                      />
+                      <div class="card-body">
+                          <h5 class="card-title"><%=data[j].DonatedBy%></h5>
+                          <div class="card-text">
+                              <h6><%=data[j].material%></h6>
+                              <h6><%=data[j].quantity%></h6>
+                              <p><%=data[j].description%></p>
+                          </div>
+                          
+                      </div>
+                  </div>
+              </div>
+              <%}%>
+          </div>
+          <%}%>
+      </div>
+      <div class="push"></div>
     </div>
         
 <%-include("partials/footer.ejs")%>

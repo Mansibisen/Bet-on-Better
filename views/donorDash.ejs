@@ -1,158 +1,134 @@
 <%- include('./partials/donorNav'); %> 
 
-<div id="dash-nav" class="mx-auto">
-    <span><button id="all-loc">Map</button></span>
-    <span><button id="search-btn">Search</button></span>
-</div>
-
-<div id="mapid" class="mx-auto my-3"></div>
-
-<div id="search-container" class="my-4">
-
-    <div id="searchbar-container" class="mx-auto">
-        <input type="text" class="mx-auto" id="searchbar" placeholder="Search by charity name or resource requirement"> 
-    </div> 
-
-    <div id="searchresults" class="mx-auto my-3">
-      <h3 class="row-name">Search Results</h3> 
-      <h4><u>Charity Houses</u></h4>           
-      <div class="row" id="ch-matchlist"></div>
-      <h4><u>Resources Required</u></h4>
-      <div class="row" id="rq-matchlist"></div>
+<div class="container wrapper">
+    <div id="dash-nav" class="mx-auto">
+        <span><button id="all-loc">Map</button></span>
+        <span><button id="search">Search</button></span>
     </div>
 
-</div>
+    <div id="mapid" class="mx-auto my-3"></div>
 
+    <div id="search-container" class="my-4">
 
-<script>
+        <div id="searchbar-container" class="mx-auto">
+            <input type="text" class="mx-auto" id="searchbar" placeholder="Search by charity name or resource requirement"> 
+        </div> 
 
-    const searchBtn=document.getElementById("search-btn");
-    const allBtn=document.getElementById("all-loc");
-    const mapContainer=document.getElementById("mapid");
-    const searchContainer=document.getElementById("search-container");
+        <div id="searchresults" class="mx-auto my-3">
+        <h3 class="row-name">Search Results</h3> 
+        <h4><u>Charity Houses</u></h4>           
+        <div class="row" id="ch-matchlist"></div>
+        <h4><u>Resources Required</u></h4>
+        <div class="row" id="rq-matchlist"></div>
+        </div>
 
-    mapContainer.style.display="block";
-    searchContainer.style.display="none";
+    </div>
+    <div class="push"></div>
 
-
-    searchBtn.addEventListener('click',()=>{
-        console.log("click");
-        mapContainer.style.display="none";
-        searchContainer.style.display="block";
-        });
-    allBtn.addEventListener('click',()=>{
-        console.log("click");
+    <script>
+        const searchBtn=document.getElementById("search");
+        const allBtn=document.getElementById("all-loc");
+        const mapContainer=document.getElementById("mapid");
+        const searchContainer=document.getElementById("search-container");
         mapContainer.style.display="block";
         searchContainer.style.display="none";
-    });
-
-    //Map
-
-    var mymap = L.map('mapid').setView([13.0827, 80.2707], 6);
-
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1,
-    accessToken: 'pk.eyJ1IjoiYXJuYXZtZW5vbiIsImEiOiJja2l1ZjVpMngwOTd5MnptZTdvcHNvN211In0.gvEFhCARcSf-VHl3W1XGRA'
-    }).addTo(mymap);
-
-    let locations=[];
-    let markers=[];
-
-    const getLocations= async ()=>{
-        const res=await fetch(`/donor/charities/all`);
-        locations=await res.json();
-        outputMarkers(locations.data); 
-    }
-
-    const outputMarkers= points =>{
-        if(points.length>0){
-            points.forEach( element => {
-                var m = L.marker([element.location[0], element.location[1]]).addTo(mymap);
-                m.bindPopup(`<h3><a href="/donor/charityPage/${element._id}">${element.userName}</a></h3>`); 
-                markers.push(m);
+        searchBtn.addEventListener('click',()=>{
+            console.log("click");
+            mapContainer.style.display="none";
+            searchContainer.style.display="block";
             });
+        allBtn.addEventListener('click',()=>{
+            console.log("click");
+            mapContainer.style.display="block";
+            searchContainer.style.display="none";
+        });
+        //Map
+        var mymap = L.map('mapid').setView([13.0827, 80.2707], 6);
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoiYXJuYXZtZW5vbiIsImEiOiJja2l1ZjVpMngwOTd5MnptZTdvcHNvN211In0.gvEFhCARcSf-VHl3W1XGRA'
+        }).addTo(mymap);
+        let locations=[];
+        let markers=[];
+        const getLocations= async ()=>{
+            const res=await fetch(`/donor/charities/all`);
+            locations=await res.json();
+            outputMarkers(locations.data); 
         }
-    }
-
-    var m2 = L.marker([13.0827, 80.2707]).addTo(mymap);
-    m2.bindPopup("<h2>Example marker</h2><p>Will be removed at the end</p>");  
-
-    //search bar
-
-    const search=document.getElementById("searchbar");
-    const chmatchList=document.getElementById("ch-matchlist");
-    const rqmatchList=document.getElementById("rq-matchlist");
-
-    const searchUsers=async searchText=>{
-
-      let matches=[];
-
-      if(searchText.length!=0)
-      { const res=await fetch(`/donor/charities/${searchText}`);
-        matches=await res.json();
-        console.log(matches);
-      }
-
-      if(searchText.length===0){
-          matches=[];   
-          chmatchList.innerHTML='-';
-          rqmatchList.innerHTML='-';
-      }
-
-      outputHtml(matches.charities,matches.req); 
-    }; 
-
-
-      const outputHtml= (charities,req)=>{
-          if(charities.length>0){
-              const html=charities.map(
-                  match=>`
-                  <div class="col-lg-3 my-1" onclick="window.location.href='/donor/charityPage/${match._id}'">
-                  <div class="card border-dark">
-                    <img src=${match.url} width="500" height="300" id="card-img" class="card-img-top img-fluid" onerror="this.onerror=null; this.src='https://probonoaustralia.com.au/wp-content/uploads/2020/05/Charity-heart-770.jpg'">
-                    <div class="card-block bg-dark text-white px-4">
-                      <h3 class="card-title">${match.name}</h3>  
-                    </div>
-                  </div>
-                  </div> 
-                 `
-              ).join('');
-
-              chmatchList.innerHTML=html;
-          };
-
-          if(req.length>0){
-              const html=req.map(
-                  match=>`
-                  <div class="col-lg-3 my-1" onclick="window.location.href='/donor/charityPage/${match.charityID}'">
-                  <div class="card border-dark">
-                    <img src=${match.url} width="500" height="300" id="card-img" class="card-img-top img-fluid" onerror="this.onerror=null; this.src='https://media.istockphoto.com/photos/white-rice-in-sack-and-wooden-scoop-isolated-on-white-picture-id515001934'">
-                    <div class="card-block bg-dark text-white px-4">
-                      <h3 class="card-title">${match.material} : x${match.quantity}</h3>  
-                    </div>
-                  </div>
-                  </div> 
-                 `
-              ).join('');
-
-              rqmatchList.innerHTML=html;
-          };
-
-          if(charities.length<=0 && req.length<=0){
+        const outputMarkers= points =>{
+            if(points.length>0){
+                points.forEach( element => {
+                    var m = L.marker([element.location[0], element.location[1]]).addTo(mymap);
+                    m.bindPopup(`<h3><a href="/donor/charityPage/${element._id}">${element.userName}</a></h3>`); 
+                    markers.push(m);
+                });
+            }
+        }
+        var m2 = L.marker([13.0827, 80.2707]).addTo(mymap);
+        m2.bindPopup("<h2>Example marker</h2><p>Will be removed at the end</p>");  
+        //search bar
+        const search=document.getElementById("searchbar");
+        const chmatchList=document.getElementById("ch-matchlist");
+        const rqmatchList=document.getElementById("rq-matchlist");
+        const searchUsers=async searchText=>{
+        let matches=[];
+        if(searchText.length!=0)
+        { const res=await fetch(`/donor/charities/${searchText}`);
+            matches=await res.json();
+            console.log(matches);
+        }
+        if(searchText.length===0){
             matches=[];   
             chmatchList.innerHTML='-';
             rqmatchList.innerHTML='-';
+        }
+        outputHtml(matches.charities,matches.req); 
+        }; 
+        const outputHtml= (charities,req)=>{
+            if(charities.length>0){
+                const html=charities.map(
+                    match=>`
+                    <div class="col-lg-3 my-1" onclick="window.location.href='/donor/charityPage/${match._id}'">
+                    <div class="card border-dark">
+                        <img src=${match.url} width="500" height="300" id="card-img" class="card-img-top img-fluid" onerror="this.onerror=null; this.src='https://probonoaustralia.com.au/wp-content/uploads/2020/05/Charity-heart-770.jpg'">
+                        <div class="card-block bg-dark text-white px-4">
+                        <h3 class="card-title">${match.userName}</h3>  
+                        </div>
+                    </div>
+                    </div> 
+                    `
+                ).join('');
+                chmatchList.innerHTML=html;
+            };
+            if(req.length>0){
+                const html=req.map(
+                    match=>`
+                    <div class="col-lg-3 my-1" onclick="window.location.href='/donor/charityPage/${match._id}'">
+                    <div class="card border-dark">
+                        <img src=${match.url} width="500" height="300" id="card-img" class="card-img-top img-fluid" onerror="this.onerror=null; this.src='https://media.istockphoto.com/photos/white-rice-in-sack-and-wooden-scoop-isolated-on-white-picture-id515001934'">
+                        <div class="card-block bg-dark text-white px-4">
+                        <h3 class="card-title">${match.material} : x${match.quantity}</h3>  
+                        </div>
+                    </div>
+                    </div> 
+                    `
+                ).join('');
+                rqmatchList.innerHTML=html;
+            };
+            if(charities.length<=0 && req.length<=0){
+                matches=[];   
+                chmatchList.innerHTML='-';
+                rqmatchList.innerHTML='-';
+            }
+        };
+        
+        getLocations();  
+        search.addEventListener('input', ()=>{console.log(search.value);searchUsers(search.value)});
+    </script>
+</div>
 
-          }
-      };
-
-    
-    getLocations();  
-    search.addEventListener('input', ()=>{console.log(search.value);searchUsers(search.value)});
-
-
-</script>
+<%- include('./partials/footer.ejs'); %> 
