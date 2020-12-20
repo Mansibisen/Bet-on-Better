@@ -114,8 +114,9 @@ router.post("/charityPage/donate", async (req, res) => {
 
 router.get("/profile", async (req, res) => {
 	try {
-		if(isValidObjectId(req.user_id)) {
-			let donorDetails = await Donor.findById(req.user_id);
+        console.log(req.user.id)
+		if(isValidObjectId(req.user.id)) {
+			let donorDetails = await Donor.findById(req.user.id);
 			if(!donorDetails) res.status(403).json({ message: 'Not Found' });
 			else {
 				donorDetails = {...donorDetails._doc};

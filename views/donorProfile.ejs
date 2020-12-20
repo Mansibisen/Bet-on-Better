@@ -11,6 +11,8 @@
 
     <div id="pastDonations">
 
+        <% if(info.donation.length!=0) { %>
+
         <ul id="donation-list">
             <% info.donation.forEach(item=>{ %>
    
@@ -21,44 +23,19 @@
         
             <%  }) %>
         </ul>
+
+        <% } else{ %>
+
+        <h4>No past donations</h4>
+
+        <% } %>
         
     </div>
 
 </div>
 
 <script>
-/*     const donList=document.getElementById("donation-list");
-    let id=localStorage.getItem('userId');
-  
-    const getProfile=async searchText=>{
 
-    const res=await fetch(`/donor/profile/${id}`);
-    matches=await res.json();
-    console.log(matches);
-    outputHtml(matches.data.donation); 
-  }; 
-
-    const outputHtml= matches=>{
-        if(matches.length>0){
-            const html=matches.map(
-                item=>`
-                <li>
-                    <h3><%=item.DonatedTo %> - <%= item.date %> </h3>
-                    <p> <%= item.material %> : <%= item.quantity %>
-                </li>
-               `
-            ).join('');
-
-            donList.innerHTML=html;
-        }
-        else{
-          donList.innerHTML='<p> No donations yet </p>';
-        }
-    };
-
-  
-  getProfile();
- */
 </script>
 
 </script>
