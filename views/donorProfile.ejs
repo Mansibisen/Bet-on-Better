@@ -7,9 +7,9 @@
 			<% for(let detail in data.basic) { %>
 				<label><%= detail[0].toUpperCase()+detail.slice(1) %></label>
 				<% if(detail == 'contact') {%>
-					<input type="number" class="form-control mb-3" id=<%= detail %> value=<%= data[detail] %> >
+					<input type="number" class="form-control mb-3" id=<%= detail %> value=<%= data.basic[detail] %> >
 				<% } else { %>
-					<input type="text" class="form-control mb-3" id=<%= detail %> value=<%= data[detail] %> >
+					<input type="text" class="form-control mb-3" id=<%= detail %> value=<%= data.basic[detail] %> >
 			<% }} %>
 			<button class="btn btn-success w-100">Update</button>
 		</div>
