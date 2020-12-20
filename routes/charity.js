@@ -81,12 +81,13 @@ router.get("/requirements/add", isLoggedIn, (req, res) => {
 });
 
 router.post("/requirements", async (req, res) => {
+  let charityUser = await Charity.findById(req.user.id);
   var newItem = {
     material: req.body.material,
     quantity: req.body.quantity,
     description: req.body.description,
+    charityID: req.user.id
   };
-  let charityUser = await Charity.findById(req.user.id);
 
   Requirement.create(newItem, async (err, createdItem) => {
     if (err) {
