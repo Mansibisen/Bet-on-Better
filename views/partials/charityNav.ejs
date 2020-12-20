@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <style>
+        li > a:hover {
+            background-color: gray;
+        }
+        .nav-link {
+            color: wheat !important;
+        }
+    </style>
+    <a class="navbar-brand" href="/charity"> 
+        <h3 style="font-family: cursive; color: red;"> BET ON BETTER </h1>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/charity/requirements"> My Requirements </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/charity/profile/<%= user.id %>"> My Profile </a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav ml-lg-5">
+            <li class="nav-item">
+                <a href="/logout" class="btn btn-outline-danger"> Logout </a>
+            </li>
+        </ul>
+    </div>
+</nav>

@@ -1,52 +1,31 @@
 <%- include('./partials/messages.ejs')%>
-<%-include("partials/header.ejs")%>
-<link rel="stylesheet" href="/CharityRequirements.css">
-<div style="height:100%">
-   
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">BET ON BETTER</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link " aria-current="page" href="/charity/">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="requirements/add" >ADD</a>
-              </li>
-              <li class="nav-item text-end">
-                <a href="/logout" class="nav-link text-end">Logout</a>
-              </li>
-            </ul>
-           
-          </div>
+<%- include("./partials/charityNav.ejs"); %>
+
+<% if(data.length == 0) { %>
+  <h4 class="mt-4 text-center"> There are no requirements given as of now! Add requirement. </h4>
+<% } %>
+
+<% data.forEach(function (datum) { %>
+
+    <div class="card mt-4 mb-4 border-dark">
+      <h3 class="card-header text-center">
+        <%= datum.material %>
+      </h3>
+        <div class="card-body" style="background-color: aliceblue;">
+          <div class="card-title mb-4"> Description: <strong> <%= datum.description %> </strong> </div>
+          <div class="card-title mb-4"> Quantity: <strong> <%= datum.quantity %> </strong> </div>
+          <br> <hr>
+          <a href="/charity/requirements/update/<%= datum.id %>" class="btn btn-info btn-lg mr-2">Update</a>
+          <form action="/charity/<%= datum.id %>?_method=DELETE" method="POST" class="d-inline">
+              <button type="submit" class="btn btn-danger btn-lg">Delete</button>
+          </form>
         </div>
-      </nav>
-    <br></br>
-    <div class="container">
-        <% var max = data.length %>
-        <% for( var i=0; i< max; i++){%>
-        <div class="item">
-            <h1><%=data[i].material%></h1>
-            <h3>Quantity :-<%=data[i].quantity%></h3>
-            <p>Description:-<%=data[i].description%></p>
-            <a href="/charity/requirements/update/<%= data[i].id %>" class="btn btn-info btn-lg mr-2">Update</a>
-            <form action="/charity/<%= data[i].id %>?_method=DELETE" method="POST" class="d-inline">
-                <button type="submit" class="btn btn-danger btn-lg">Delete</button>
-            </form>
-            <br><br>
+        <div class="card-footer mb-2"> Added on : <strong> <%= datum.createdDate.toLocaleDateString() %> </strong>
+          <div class="float-right"> Added by: <strong> You </strong> </div>
         </div>
-        <br><Br>
-        <%}%>
     </div>
-    
-</div>
+
+<% }) %>
 
 
 

@@ -25,6 +25,7 @@ router.get("/requirements", isLoggedIn, async (req, res) => {
         totalRequirements.push(value);
         if (index === totalRequirementsID.length - 1) {
           return res.render("CharityRequirement", {
+            user: user,
             data: totalRequirements,
           });
         }
@@ -32,6 +33,7 @@ router.get("/requirements", isLoggedIn, async (req, res) => {
       console.log("Req: ", totalRequirements);
     } else {
       return res.render("CharityRequirement", {
+        user: user,
         data: totalRequirements,
       });
     }
@@ -64,7 +66,7 @@ router.get("/", isLoggedIn, async (req, res) => {
       });
     } else {
       console.log("from route ", totalDonation);
-      return res.render("charityDashboard", { data: totalDonation });
+      return res.render("charityDashboard", { user: user, data: totalDonation });
     }
   } catch (e) {
     console.log(e);
@@ -74,7 +76,8 @@ router.get("/", isLoggedIn, async (req, res) => {
 
 router.get("/requirements/add", isLoggedIn, (req, res) => {
   let type = "Add";
-  res.render("charityReqAdd", { type: type, requirement: new Requirement() });
+  let user = req.user;
+  res.render("charityReqAdd", { type: type, user: user, requirement: new Requirement() });
 });
 
 router.post("/requirements", async (req, res) => {
@@ -103,8 +106,10 @@ router.post("/requirements", async (req, res) => {
 router.get("/requirements/update/:id", isLoggedIn, async (req, res) => {
   const requirement = await Requirement.findById(req.params.id);
   let type = "Update";
+  let user = req.user;
   res.render("charityReqAdd", {
     type: type,
+    user: user,
     material: req.body.material,
     quantity: req.body.quantity,
     description: req.body.description,
@@ -124,6 +129,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
+  let user = req.user;
   let requirement = await Requirement.findById(req.params.id);
   requirement.material = req.body.material;
   requirement.quantity = req.body.quantity;
@@ -137,6 +143,7 @@ router.put("/:id", async (req, res) => {
     req.flash("error_msg", "Please fill all the details!");
     res.render("charityReqAdd", {
       type: "Update",
+      user: user,
       material: req.body.material,
       quantity: req.body.quantity,
       description: req.body.description,
