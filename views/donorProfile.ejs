@@ -7,18 +7,27 @@
 </div>
 
 <div>
-    <h3>Past Donations</h3>
+    <h2>Past Donations</h2>
 
     <div id="pastDonations">
 
-        <ul id="donation-list"></ul>
+        <ul id="donation-list">
+            <% info.donation.forEach(item=>{ %>
+   
+                <li>
+                    <h4><%= item.DonatedTo %> (<%= item.date %>)</h4>
+                    <p><%= item.material %> : <%= item.quantity %></p>
+                </li>
+        
+            <%  }) %>
+        </ul>
         
     </div>
 
 </div>
 
 <script>
-    const donList=document.getElementById("donation-list");
+/*     const donList=document.getElementById("donation-list");
     let id=localStorage.getItem('userId');
   
     const getProfile=async searchText=>{
@@ -43,11 +52,11 @@
             donList.innerHTML=html;
         }
         else{
-          donList.innerHTML=',p> No donations yet </p>';
+          donList.innerHTML='<p> No donations yet </p>';
         }
     };
 
   
   getProfile();
-
+ */
 </script>

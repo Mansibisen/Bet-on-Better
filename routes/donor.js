@@ -10,9 +10,9 @@ router.get('/',(req,res)=>{
     res.render('donorDash');
 })
 
-router.get('/profile',(req,res)=>{
+/* router.get('/profile',(req,res)=>{
     res.render('donorProfile');
-})
+}) */
 
 router.get('/charities/all', async(req,res)=>{
     try{
@@ -103,15 +103,15 @@ router.post("/charityPage/donate", async (req, res) => {
     }
   });
 
-router.get("/profile/:id", async (req, res) => {
+router.get("/profile", async (req, res) => {
 	try {
-		if(isValidObjectId(req.params.id)) {
-			let donorDetails = await Donor.findById(req.params.id);
+		if(isValidObjectId(req.user_id)) {
+			let donorDetails = await Donor.findById(req.user_id);
 			if(!donorDetails) res.status(403).json({ message: 'Not Found' });
 			else {
 				donorDetails = {...donorDetails._doc};
 				delete donorDetails.password;
-				res.status(200).json(donorDetails);
+				res.status(200).render("donorProfile",{info: donorDetails});
 			}
 		}
 		else {
