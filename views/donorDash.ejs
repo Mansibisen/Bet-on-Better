@@ -1,7 +1,7 @@
 <%- include ('partials/donorNav'); -%> 
 
 <div id="dash-nav" class="mx-auto">
-    <span><button id="all-loc">All Locations</button></span>
+    <span><button id="all-loc">Map</button></span>
     <span><button id="search">Search</button></span>
 </div>
 
@@ -10,12 +10,15 @@
 <div id="search-container" class="my-4">
 
     <div id="searchbar-container" class="mx-auto">
-        <input type="text" class="mx-auto" id="searchbar" placeholder="Enter your search query"> 
+        <input type="text" class="mx-auto" id="searchbar" placeholder="Search by charity name or resource requirement"> 
     </div> 
 
     <div id="searchresults" class="mx-auto my-3">
-      <h3 class="row-name">Search Results</h3>            
-      <div class="row" id="matchlist"></div>
+      <h3 class="row-name">Search Results</h3> 
+      <h4><u>Charity Houses</u></h4>           
+      <div class="row" id="ch-matchlist"></div>
+      <h4><u>Resources Required</u></h4>
+      <div class="row" id="rq-matchlist"></div>
     </div>
 
 </div>
@@ -28,24 +31,24 @@
     const mapContainer=document.getElementById("mapid");
     const searchContainer=document.getElementById("search-container");
 
-    function toggleWindow(){
-        console.log("click");
-        if(mapContainer.style.display=="none"){
-            mapContainer.style.display=="block";
-            searchContainer.style.display=="none"
-        }
-        else{
-            mapContainer.style.display=="none";
-            searchContainer.style.display=="block"
-        }
-    }
+    mapContainer.style.display="block";
+    searchContainer.style.display="none";
 
-    searchBtn.addEventListener('click',()=>{toggleWindow();});
-    allBtn.addEventListener('click',()=>{toggleWindow();});
+
+    searchBtn.addEventListener('click',()=>{
+        console.log("click");
+        mapContainer.style.display="none";
+        searchContainer.style.display="block";
+        });
+    allBtn.addEventListener('click',()=>{
+        console.log("click");
+        mapContainer.style.display="block";
+        searchContainer.style.display="none";
+    });
 
     //Map
 
-    var mymap = L.map('mapid').setView([13.0827, 80.2707], 13);
+    var mymap = L.map('mapid').setView([13.0827, 80.2707], 6);
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -81,8 +84,9 @@
     //search bar
 
     const search=document.getElementById("searchbar");
-    const matchList=document.getElementById("matchlist");
-  
+    const chmatchList=document.getElementById("ch-matchlist");
+    const rqmatchList=document.getElementById("rq-matchlist");
+
     const searchUsers=async searchText=>{
 
       let matches=[];
@@ -95,20 +99,21 @@
 
       if(searchText.length===0){
           matches=[];   
-          matchList.innerHTML='';
+          chmatchList.innerHTML='-';
+          rqmatchList.innerHTML='-';
       }
 
-      outputHtml(matches.data); 
+      outputHtml(matches.charities,matches.req); 
     }; 
 
 
-      const outputHtml= matches=>{
-          if(matches.length>0){
-              const html=matches.map(
+      const outputHtml= (charities,req)=>{
+          if(charities.length>0){
+              const html=charities.map(
                   match=>`
-                  <div class="col-lg-3 my-1" onclick="window.location.href='/product/${match._id}'">
+                  <div class="col-lg-3 my-1" onclick="window.location.href='/donor/charityPage/${match._id}'">
                   <div class="card border-dark">
-                    <img src=${match.url} width="500" height="300" id="card-img" class="card-img-top img-fluid" onerror="this.onerror=null; this.src='https://cdn.jpegmini.com/user/images/slider_puffin_jpegmini_mobile.jpg'">
+                    <img src=${match.url} width="500" height="300" id="card-img" class="card-img-top img-fluid" onerror="this.onerror=null; this.src='https://probonoaustralia.com.au/wp-content/uploads/2020/05/Charity-heart-770.jpg'">
                     <div class="card-block bg-dark text-white px-4">
                       <h3 class="card-title">${match.userName}</h3>  
                     </div>
@@ -117,11 +122,30 @@
                  `
               ).join('');
 
-              matchList.innerHTML=html;
-          }
-          else{
+              chmatchList.innerHTML=html;
+          };
+
+          if(req.length>0){
+              const html=req.map(
+                  match=>`
+                  <div class="col-lg-3 my-1" onclick="window.location.href='/donor/charityPage/${match._id}'">
+                  <div class="card border-dark">
+                    <img src=${match.url} width="500" height="300" id="card-img" class="card-img-top img-fluid" onerror="this.onerror=null; this.src='https://media.istockphoto.com/photos/white-rice-in-sack-and-wooden-scoop-isolated-on-white-picture-id515001934'">
+                    <div class="card-block bg-dark text-white px-4">
+                      <h3 class="card-title">${match.material} : x${match.quantity}</h3>  
+                    </div>
+                  </div>
+                  </div> 
+                 `
+              ).join('');
+
+              rqmatchList.innerHTML=html;
+          };
+
+          if(charities.length<=0 && req.length<=0){
             matches=[];   
-            matchList.innerHTML='';
+            chmatchList.innerHTML='-';
+            rqmatchList.innerHTML='-';
 
           }
       };
@@ -132,4 +156,3 @@
 
 
 </script>
-<%-include("partials/footer.ejs")%>

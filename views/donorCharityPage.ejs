@@ -1,28 +1,37 @@
-<%- include ('partials/header'); -%> 
 <%- include ('partials/donorNav'); -%> 
 
 
-<!-- <div>
-    <%= info.userName %>
+<div>
+    <%= info.contact %>
 </div>
 
-<div>
-    <h2>Requirements</h2>
+ 
+<% if(info.requirements.length>0){ %>
+
+        <div>
+            <h2>Requirements</h2>
+            
+            <ul>
+            <% info.requirements.forEach(item=>{ %>
+           
+                <li>
+                    <h4><%=item.material %> : <%=item.quantity %></h4>
+                    <p><%= item.description %></p>
+                </li>
+        
+            <%  }) %>
+        
+            </ul>
+        </div> 
     
-    <ul>
-    <% info.requirements.forEach(item=>{ %>
-   
-        <li>
-            <h4><%=item.material %> : <%=item.quantity %></h4>
-            <p><%= item.description %></p>
-        </li>
+        <button id="donateBtn">Donate Now!</button>
 
-    <%  }) %>
+<% } else { %>
 
-    </ul>
-</div> -->
+        <p>No requirements presently. Kindly browse other charities</p>
 
-<button id="donateBtn">Donate Now!</button>
+<% } %>
+
 <br>
 <hr>
 <br>
