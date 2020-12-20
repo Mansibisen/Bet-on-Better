@@ -1,28 +1,34 @@
 <%- include('./partials/donorNav'); %>
 
-<div>
-    <h3>Name: <%= data.basic.name %></h3>
-</div>
-
-<div>
-    <h3>Past Donations</h3>
-
-    <div id="pastDonations">
-
-		<% if(data.details.length > 0) { %>
-		<ul>
-			<% data.details.forEach(detail => { %>
-				<li>
-					<h3><%=detail.DonatedTo %> - <%= detail.date %> </h3>
-                    <p> <%= detail.material %> : <%= detail.quantity %>
-				</li>
-			<% }) %>
-		</ul>
-		<% } else { %>
-			<h4 class="text-danger">No Donations</h4>
-		<% } %>
-    </div>
-
+<div class="row mt-3">
+	<div class="form-group col-sm-6">
+		<h3>Profile</h3><hr>
+		<% for(let detail in data.basic) { %>
+			<label><%= detail[0].toUpperCase()+detail.slice(1) %></label>
+			<% if(detail == 'contact') {%>
+				<input type="number" class="form-control mb-3" id=<%= detail %> value=<%= data[detail] %> >
+			<% } else { %>
+				<input type="text" class="form-control mb-3" id=<%= detail %> value=<%= data[detail] %> >
+		<% }} %>
+		<button class="btn btn-success w-100">Update</button>
+	</div>
+	<div class="text-center col-sm-6">
+		<h3>Past Donations</h3><hr>
+		<div id="pastDonations">
+			<% if(data.details.length > 0) { %>
+			<ul>
+				<% data.details.forEach(detail => { %>
+					<li>
+						<h3><%=detail.DonatedTo %> - <%= detail.date %> </h3>
+						<p> <%= detail.material %> : <%= detail.quantity %>
+					</li>
+				<% }) %>
+			</ul>
+			<% } else { %>
+				<h4 class="text-danger">No Donations</h4>
+			<% } %>
+		</div>
+	</div>
 </div>
 
 <%-include("partials/footer.ejs")%>
