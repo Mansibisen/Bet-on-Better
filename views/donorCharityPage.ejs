@@ -2,17 +2,17 @@
 
 
 <div>
-    <%= info.contact %>
+    <%= info.name %>
 </div>
 
  
-<% if(info.requirements.length>0){ %>
+<% if(req.length>0){ %>
 
         <div>
             <h2>Requirements</h2>
             
             <ul>
-            <% info.requirements.forEach(item=>{ %>
+            <% req.forEach(item=>{ %>
            
                 <li>
                     <h4><%=item.material %> : <%=item.quantity %></h4>
@@ -43,9 +43,9 @@
         <label for="reqItem">Select a material : </label>
 
         <select name="reqItem" id="reqItem">
-        <% info.requirements.forEach(item=>{ %>
+        <% req.forEach(item=>{ %>
    
-            <option value="<%=item %>"><%= item%></option>
+            <option value="<%=item %>"><%= item.material%></option>
     
         <%  }) %> 
 
