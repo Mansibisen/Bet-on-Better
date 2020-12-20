@@ -5,6 +5,7 @@ const Charity = require("../models/Charity");
 const Donor = require("../models/Donor");
 const Donation = require("../models/Donation");
 const { isLoggedIn } = require("../middlewares/fixers");
+const { compare } = require("bcrypt");
 
 //router.get('/donor/profile',async(req,res)=>{})
 
@@ -15,9 +16,6 @@ router.get("/", isLoggedIn, (req, res) => {
 router.get("/login", function (req, res) {
     res.render("DonorLogin");
 });
-/* router.get("/profile", (req, res) => {
-    res.render("donorProfile");
-}); */
 
 router.get("/charities/all", async (req, res) => {
     try {
@@ -115,18 +113,16 @@ router.post("/charityPage/donate", async (req, res) => {
 
 router.get("/profile", isLoggedIn, async (req, res) => {
 	try {
-		let totalData={};
-		let details;
-		// console.log(req.user);
+		let totalData = {};
 		totalData['basic'] = req.user;
 		await Donation.find({ DonatedBy: req.user._id }, (err, detail) => {
 			if(err) throw err;
-			else details = detail;
+			else {
+				totalData['details'] = detail;
+				res.locals.data = totalData;
+				res.render("donorProfile");
+			}
 		});
-		totalData['details'] = details;
-		console.log(totalData);
-		res.locals.data = totalData;
-		res.render("donorProfile");
 	}
 	catch(err){
 		console.log(err);
