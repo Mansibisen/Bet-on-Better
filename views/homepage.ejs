@@ -1,51 +1,49 @@
+<%- include('./partials/indexNav.ejs'); %> 
 
-<link rel="stylesheet" href="/homepageStyles.css">
-<div id="container">
-    
-        
-    
-
-    <div class="leftSide">
-        <h1 id="heading">Bet on Better</h1>
-        <br></br>
-        <img
-            src= "../logoB.png"
-            id="logo"
-            alt="logo"
-            height="300px"
-            width="300px"
-        ></img>
-        <br></br>
-    </div>
-    <div class="rightSide">
-       
-        <a href="/register"><button id="getStarted">GET STARTED</button></a>
-        <p id="content">
-            The knowledge that you’re helping others is hugely
-            empowering and, in turn, can make you feel happier and
-            more fulfilled. We asked 700 of our generous donors to
-            tell us what motivates them to give regularly to
-            charity; 42% agreed the enjoyment they receive from
-            giving as a key influence. Now its your turn help
-            others.
-        </p>
-        <div>
-            <link
-                rel="stylesheet"
-                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-            ></link>
-
-            <a href="#home" class="fa fa-facebook"></a>
-            <a href="#home" class="fa fa-twitter"></a>
-            <a href="#home" class="fa fa-linkedin"></a>
-            <a href="#home" class="fa fa-instagram "></a>
+<div class="container">
+    <h2 class="mt-4 text-center">
+        "Charity begins at home"
+    </h2>
+    <br>
+    <div class="card mt-4 border-dark" style="box-shadow: 4px 4px 4px 4px black;">
+        <div class="card-body">
+            <div class="card-title float-right col-lg-4 col-md-6 col-sm-7">
+                <img
+                    src= "../logoB.png"
+                    id="logo"
+                    alt="logo"
+                    height="100%"
+                    width="100%"
+                ></img>
+            </div>
+            <div class="card-title col-md-6 col-sm-12" style="font-size: large;"> <br>
+                The knowledge that you’re helping others is hugely
+                empowering and, in turn, can make you feel happier and
+                more fulfilled. We asked 700 of our generous donors to
+                tell us what motivates them to give regularly to
+                charity; 42% agreed the enjoyment they receive from
+                giving as a key influence. Now its your turn help
+                others.
+            </div>
         </div>
-        <br>
-        <a href="/donor/login">already a user </a>
-        <br>
-        <a href="/charity/login">already a enrolled charity</a>
-        <br></br>
+    </div>
+    <div class="row mt-4">
+        <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
+            <a href="/donor/login" class="btn btn-secondary btn-block">
+                Donor Login
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
+            <a href="/register" class="btn btn-info btn-block">
+                Register
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
+            <a href="/charity/login" class="btn btn-secondary btn-block">
+                Charity Login
+            </a>
+        </div>
     </div>
 </div>
-</body>
-</html>
+
+<%- include("./partials/footer.ejs") %>
