@@ -7,6 +7,7 @@ const Requirement = require("../models/Requirements");
 const Donation = require("../models/Donation");
 const { isValidObjectId } = require("mongoose");
 const { isLoggedIn } = require("../middlewares/fixers");
+const Gravatar = require("gravatar-api");
 
 router.get("/login", function (req, res) {
   res.render("CharityLogin");
@@ -153,23 +154,19 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.get("/profile/:id", async (req, res) => {
-  try {
-    if (isValidObjectId(req.params.id)) {
-      let charityDetails = await Charity.findById(req.params.id);
-      if (!charityDetails) res.status(403).json({ message: "Not Found" });
-      else {
-        charityDetails = { ...charityDetails._doc };
-        delete charityDetails.password;
-        res.status(200).json(charityDetails);
-      }
-    } else {
-      res.status(400).json({ message: "Invalid Id" });
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Server error : Try again later" });
-  }
+router.get("/profile", isLoggedIn, (req, res) => {
+	try {
+		let sendData = {...req.user._doc};
+		sendData = {...sendData};
+		['donation','location','requirements','_id','password','date','__v'].forEach(e => delete sendData[e]);
+		res.locals.img = Gravatar.imageUrl({ email:sendData.email, parameters: { "size": "128" }});
+		res.locals.data = sendData;
+		res.render("charityProfile");
+	}
+	catch(err) {
+		console.log(err);
+    	res.status(500).json({ message: "Server error : Try again later" });
+	}
 });
 
 module.exports = router;
