@@ -10,8 +10,8 @@ const { compare } = require("bcrypt");
 //router.get('/donor/profile',async(req,res)=>{})
 
 router.get("/", isLoggedIn, (req, res) => {
-	// console.log({donorSession: req.session.passport.user});
-    res.render("donorDash");
+    let user = req.user;
+    res.render("donorDash", { user: user });
 });
 router.get("/login", function (req, res) {
     res.render("DonorLogin");
@@ -62,9 +62,10 @@ router.get("/charityPage/:id", async (req, res) => {
     try {
         let char;
         let chID = req.params.id;
+        let user = req.user;
         char = await Charity.findById(chID);
         console.log(char);
-        return res.status(200).render("donorCharityPage", { info: char });
+        return res.status(200).render("donorCharityPage", { user: user, info: char });
     } catch (e) {
         console.log(e);
         return res
@@ -113,8 +114,11 @@ router.post("/charityPage/donate", async (req, res) => {
 
 router.get("/profile", isLoggedIn, async (req, res) => {
 	try {
+		let user = req.user._doc;
+		user = {...user};
+		['donation','_id','password','date','__v'].forEach(e => delete user[e]);
 		let totalData = {};
-		totalData['basic'] = req.user;
+		totalData['basic'] = user;
 		await Donation.find({ DonatedBy: req.user._id }, (err, detail) => {
 			if(err) throw err;
 			else {

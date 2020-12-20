@@ -1,8 +1,8 @@
-<%- include('./partials/messages.ejs')%>
+<%- include('./partials/messages.ejs'); %>
 <%- include("./partials/charityNav.ejs"); %>
 
 <% if(data.length == 0) { %>
-  <h4 class="mt-4 text-center"> There are no requirements given as of now! Add requirement. </h4>
+  <h4 class="mt-4 text-center"> There are no requirements as of now! <a href="/charity/requirements/add"> Add a requirement? </a> </h4>
 <% } %>
 
 <% data.forEach(function (datum) { %>
