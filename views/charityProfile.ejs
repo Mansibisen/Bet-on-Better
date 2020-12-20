@@ -3,16 +3,20 @@
 
 <div class="d-flex flex-column align-items-center w-100">
 	<br>
-	<img src=<%= img %> class="rounded-circle mb-2" alt="User Image">
-	<div class="form-group">
-		<% for(let userDetail in data) { %>
-			<label><%= userDetail[0].toUpperCase()+userDetail.slice(1) %></label>
-			<% if(userDetail == 'contact') {%>
-				<input type="number" class="form-control mb-3" id=<%= userDetail %> value=<%= data[userDetail] %> >
-			<% } else { %>
-				<input type="text" class="form-control mb-3" id=<%= userDetail %> value=<%= data[userDetail] %> >
+	<div class="row w-100 align-items-center justify-content-center">
+		<div class="col-sm-7 col-md-5 w-100 text-center">
+			<img src=<%= img %> class="rounded-circle w-75 mb-2" alt="User Image">
+		</div>
+		<div class="form-group col-sm-5 col-md-7">
+			<% for(let userDetail in data) { %>
+				<label><%= userDetail[0].toUpperCase()+userDetail.slice(1) %></label>
+				<% if(userDetail == 'contact') {%>
+					<input type="number" class="form-control mb-3" id=<%= userDetail %> value=<%= data[userDetail] %> >
+				<% } else { %>
+					<input type="text" class="form-control mb-3" id=<%= userDetail %> value=<%= data[userDetail] %> >
+				<% } %>
 			<% } %>
-		<% } %>
-		<button class="btn btn-success w-100">Update</button>
+			<button class="btn btn-success w-100">Update</button>
+		</div>
 	</div>
 </div>

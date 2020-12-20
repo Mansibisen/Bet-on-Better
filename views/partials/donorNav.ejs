@@ -1,18 +1,53 @@
-<head>
-    <link rel="stylesheet" href="/dStyles.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-   crossorigin=""/>
-   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-   crossorigin=""></script>
-</head>
+<link rel="stylesheet" href="/dStyles.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
 
-<body>
-<div id="header">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <style>
+        li > a:hover {
+            background-color: gray;
+        }
+        .nav-link {
+            color: wheat !important;
+        }
+    </style>
+    <a class="navbar-brand" href="/donor"> 
+        <h3 style="font-family: cursive; color: red;"> BET ON BETTER </h1>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <span class="navtitle mx-3"> <a href="/donor">Dashboard</a></span>    
-    <span class="navtitle mx-3"><a href="/donor/profile">Profile</a></span>
-    <span class="navtitle mx-3"><a id="logout" href="/logout">Log out</a></span>
-    
-</div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/donor/profile/<%= user.id %>"> My Profile </a>
+            </li>
+        </ul>
+
+        <form class="form-inline my-2 my-lg-0" action="/donor/search" method="POST">
+            <input 
+                class="form-control mr-sm-2"
+                id="search"
+                name="search"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                required
+                size="15"
+                value="<%= typeof search != 'undefined' ? search : '' %>">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"> Search </button>
+        </form>
+
+        <ul class="navbar-nav ml-lg-5">
+            <li class="nav-item">
+                <a href="/logout" class="btn btn-outline-danger"> Logout </a>
+            </li>
+        </ul>
+    </div>
+</nav>
