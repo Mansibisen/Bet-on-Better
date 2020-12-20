@@ -112,17 +112,19 @@ router.post("/charityPage/donate", async (req, res) => {
     }
 });
 
-router.get("/profile/:id", isLoggedIn, async (req, res) => {
+router.get("/profile", isLoggedIn, async (req, res) => {
 	try {
-        let user = req.user;
+		let user = req.user._doc;
+		user = {...user};
+		['donation','_id','password','date','__v'].forEach(e => delete user[e]);
 		let totalData = {};
-		totalData['basic'] = req.user;
+		totalData['basic'] = user;
 		await Donation.find({ DonatedBy: req.user._id }, (err, detail) => {
 			if(err) throw err;
 			else {
 				totalData['details'] = detail;
 				res.locals.data = totalData;
-				res.render("donorProfile", { user: user });
+				res.render("donorProfile");
 			}
 		});
 	}

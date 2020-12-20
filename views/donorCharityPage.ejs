@@ -1,7 +1,33 @@
 <%- include('./partials/donorNav'); %> 
 
-<div class="container">
-    <button id="donateBtn">Donate Now!</button>
+<div class="container"></div>
+    <div>
+        <%= info.contact %>
+    </div>
+
+    
+    <% if(info.requirements.length>0){ %>
+            <div>
+                <h2>Requirements</h2>
+                
+                <ul>
+                <% info.requirements.forEach(item=>{ %>
+            
+                    <li>
+                        <h4><%=item.material %> : <%=item.quantity %></h4>
+                        <p><%= item.description %></p>
+                    </li>
+            
+                <%  }) %>
+            
+                </ul>
+            </div> 
+        
+            <button id="donateBtn">Donate Now!</button>
+    <% } else { %>
+            <p>No requirements presently. Kindly browse other charities</p>
+    <% } %>
+
     <br>
     <hr>
     <br>
@@ -32,23 +58,18 @@
     <script>
         const addItem=document.getElementById("addItem");
         const donateBtn=document.getElementById("donateBtn");
-
         const donationItems=[];
-
         donateBtn.addEventListener('click',()=>{
             document.getElementById("donationBox").style.display="block";
         })
-
         addItem.addEventListener('click',()=>{
             let material=document.getElementById("reqItem").value;
             let quantity=Number(document.getElementById("qty").value);
             let flag=0;
-
             if(quantity<1){
                 alert('Please enter a valid quantity');
                 flag=-1;
             }
-
             if(flag!=-1)
             {
                 for(let i=0;i<donationItems.length;i++)
@@ -68,11 +89,8 @@
                     donationItems.push(donjson);
                 }
         }
-
         })
         
-
-
     </script>
 </div>
 
