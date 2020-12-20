@@ -4,6 +4,7 @@ const router = express.Router();
 const Charity = require("../models/Charity");
 const Donor = require("../models/Donor");
 const Donation = require("../models/Donation");
+const Requirement = require("../models/Requirements");
 const { isLoggedIn } = require("../middlewares/fixers");
 const { compare } = require("bcrypt");
 
@@ -32,11 +33,11 @@ router.get("/charities/all", async (req, res) => {
 
 router.get("/charities/:query", async (req, res) => {
     try {
-        let char;
+        let char,reqList;
         let searchText = req.params.query;
         char = await Charity.find({
             $or: [
-                { userName: { $regex: `^${searchText}`, $options: "i" } },
+                { name: { $regex: `^${searchText}`, $options: "i" } },
                 {
                     requirements: {
                         $elemMatch: {
@@ -49,7 +50,8 @@ router.get("/charities/:query", async (req, res) => {
                 },
             ],
         });
-        return res.status(200).json({ data: char });
+        reqList=await Requirement.find({material:{$regex: `^${searchText}`, $options: "i"}})
+        return res.status(200).json({ charities: char, req: reqList });
     } catch (e) {
         console.log(e);
         return res
@@ -60,12 +62,13 @@ router.get("/charities/:query", async (req, res) => {
 
 router.get("/charityPage/:id", async (req, res) => {
     try {
-        let char;
+        let char, reqList;
         let chID = req.params.id;
         let user = req.user;
         char = await Charity.findById(chID);
-        console.log(char);
-        return res.status(200).render("donorCharityPage", { user: user, info: char });
+        reqList = await Requirement.find({charityID: chID})
+        console.log(reqList);
+        return res.status(200).render("donorCharityPage", { user: user, info: char, req: reqList });
     } catch (e) {
         console.log(e);
         return res

@@ -1,9 +1,9 @@
 <%- include('./partials/donorNav'); %> 
 
-<div class="container">
+<div class="container wrapper">
     <div id="dash-nav" class="mx-auto">
         <span><button id="all-loc">Map</button></span>
-        <span><button id="search">Search</button></span>
+        <span><button id="search-btn">Search</button></span>
     </div>
 
     <div id="mapid" class="mx-auto my-3"></div>
@@ -23,10 +23,10 @@
         </div>
 
     </div>
-
+    <div class="push"></div>
 
     <script>
-        const searchBtn=document.getElementById("search");
+        const searchBtn=document.getElementById("search-btn");
         const allBtn=document.getElementById("all-loc");
         const mapContainer=document.getElementById("mapid");
         const searchContainer=document.getElementById("search-container");
@@ -96,7 +96,7 @@
                     <div class="card border-dark">
                         <img src=${match.url} width="500" height="300" id="card-img" class="card-img-top img-fluid" onerror="this.onerror=null; this.src='https://probonoaustralia.com.au/wp-content/uploads/2020/05/Charity-heart-770.jpg'">
                         <div class="card-block bg-dark text-white px-4">
-                        <h3 class="card-title">${match.userName}</h3>  
+                        <h3 class="card-title">${match.name}</h3>  
                         </div>
                     </div>
                     </div> 
@@ -107,7 +107,7 @@
             if(req.length>0){
                 const html=req.map(
                     match=>`
-                    <div class="col-lg-3 my-1" onclick="window.location.href='/donor/charityPage/${match._id}'">
+                    <div class="col-lg-3 my-1" onclick="window.location.href='/donor/charityPage/${match.charityID}'">
                     <div class="card border-dark">
                         <img src=${match.url} width="500" height="300" id="card-img" class="card-img-top img-fluid" onerror="this.onerror=null; this.src='https://media.istockphoto.com/photos/white-rice-in-sack-and-wooden-scoop-isolated-on-white-picture-id515001934'">
                         <div class="card-block bg-dark text-white px-4">

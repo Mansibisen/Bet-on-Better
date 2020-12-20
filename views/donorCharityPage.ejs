@@ -1,27 +1,26 @@
 <%- include('./partials/donorNav'); %> 
 
-<div class="container"></div>
-    <div>
-        <%= info.contact %>
-    </div>
+<div class="container wrapper">
 
-    
-    <% if(info.requirements.length>0){ %>
-            <div>
-                <h2>Requirements</h2>
-                
-                <ul>
-                <% info.requirements.forEach(item=>{ %>
+<div>
+    <%= info.name %>
+</div>
+
+ 
+<% if(req.length>0){ %>
+
+        <div>
+            <h2>Requirements</h2>
             
-                    <li>
-                        <h4><%=item.material %> : <%=item.quantity %></h4>
-                        <p><%= item.description %></p>
-                    </li>
-            
-                <%  }) %>
-            
-                </ul>
-            </div> 
+            <ul>
+            <% req.forEach(item=>{ %>
+           
+                <li>
+                    <h4><%=item.material %> : <%=item.quantity %></h4>
+                    <p><%= item.description %></p>
+                </li>
+        
+            <%  }) %>
         
             <button id="donateBtn">Donate Now!</button>
     <% } else { %>
@@ -38,8 +37,20 @@
         <form id="donationForm">
             <label for="reqItem">Select a material : </label>
 
-            <select name="reqItem" id="reqItem">
-            <% info.requirements.forEach(item=>{ %>
+<br>
+<hr>
+<br>
+
+<div id="donationBox">
+    <h3>Donation</h3>
+
+    <form id="donationForm">
+        <label for="reqItem">Select a material : </label>
+
+        <select name="reqItem" id="reqItem">
+        <% req.forEach(item=>{ %>
+   
+            <option value="<%=item %>"><%= item.material%></option>
     
                 <option value="<%=item %>"><%= item%></option>
         
@@ -54,7 +65,7 @@
             + Add item to donation list
         </button>
     </div>
-
+    <div class="push"></div>
     <script>
         const addItem=document.getElementById("addItem");
         const donateBtn=document.getElementById("donateBtn");
