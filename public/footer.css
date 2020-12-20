@@ -1,0 +1,15 @@
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    /* Set the fixed height of the footer here */
+    height: max-content;
+    overflow: hidden;
+    text-align: center;
+    background-color: grey;
+    color: white;
+    z-index: 100;
+}
+  

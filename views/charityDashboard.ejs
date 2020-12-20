@@ -1,23 +1,37 @@
-<% include partials/header %> 
+<%-include("partials/header.ejs")%>
+
 <div>
-    <ul>
-        <li><form method="GET" action="/charity/requirements">
-            <input type="submit" value="Requirements">
-        </form></li>
-        <li>
-            <a href="#update">something else</a>
-        </li>
-        <li>
-            <a href="#delete">something else</a>
-        </li>
-        <li style= 'float: "right"'>
-            <a class="active" href="#about">
-                About
-            </a>
-        </li>
-    </ul>
+   
+  
+    <nav style="height: 10%;" class="navbar navbar-expand-lg  navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">BET ON BETTER</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a  class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Home</a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="#">Profile</a>
+              </li>
+             
+              <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="/charity/requirements">Requirements</a>
+              </li>
+              <li class="nav-item">
+                <a href="/logout" class="nav-link">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+   
     <br></br>
-    <div class="DonationRequests">
+    <div style="height: 80%;" class="DonationRequests">
         <% var max = data.length %>
         <% for( var i=0; i< max; i=i+4){%>
         <div Class="row">
@@ -44,18 +58,4 @@
         </div>
         <%}%>
     </div>
-    <div class="footer">
-        <footer class="py-5 bg-dark">
-            <div class="container">
-                <p class="m-0 text-center text-white">
-                    Copyright &copy; company name Website 2020
-                </p>
-            </div>
-        </footer>
-    </div>
-</div>
-
-
-
-
-<% include partials/footer %>
+<%-include("partials/footer.ejs")%>
