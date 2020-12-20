@@ -15,6 +15,9 @@ router.get("/", isLoggedIn, (req, res) => {
 router.get("/login", function (req, res) {
     res.render("DonorLogin");
 });
+/* router.get("/profile", (req, res) => {
+    res.render("donorProfile");
+}); */
 
 router.get("/charities/all", async (req, res) => {
     try {

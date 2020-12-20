@@ -13,6 +13,10 @@ const RequirementSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  createdDate: {
+    type: Date,
+    default: Date.now,
+  }
 });
 
 module.exports = mongoose.model("Requirement", RequirementSchema);
