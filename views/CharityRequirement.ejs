@@ -1,7 +1,7 @@
-<%- include('./partials/messages.ejs'); %>
+<%- include('./partials/messages.ejs')%>
 <%-include("partials/header.ejs")%>
 <link rel="stylesheet" href="/CharityRequirements.css">
-<div>
+<div style="height:100%">
    
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -20,8 +20,9 @@
               <li class="nav-item">
                 <a class="nav-link" href="requirements/add" >ADD</a>
               </li>
-              
-              
+              <li class="nav-item text-end">
+                <a href="/logout" class="nav-link text-end">Logout</a>
+              </li>
             </ul>
            
           </div>
@@ -46,8 +47,6 @@
     </div>
     
 </div>
-
-
 
 
 
