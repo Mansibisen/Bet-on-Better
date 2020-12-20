@@ -1,6 +1,6 @@
 <%- include('./partials/messages.ejs'); %>
 <%- include("./partials/charityNav.ejs"); %>
-<div class="container">
+<div class="container wrapper">
     <h1 class="mb-3 mt-2 text-center"> <%= type %> Requirement </h1>
     <% if(type === "Add") { %>
         <form action="/charity/requirements" method="POST">
@@ -11,6 +11,7 @@
             <%- include('./partials/requirementsForm') %>
         </form>
     <% } %>
+    <div class="push"></div>
 </div>
 
 <%-include("partials/footer.ejs")%>
