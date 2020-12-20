@@ -195,8 +195,7 @@ router.post("/charity/login", (req, res, next) => {
 router.get("/logout", (req, res) => {
     req.logout();
     req.flash("success_msg", "You are logged out!");
-    if (req.baseUrl == "/charity") res.redirect("/charity/login");
-    else res.redirect("/donor/login");
+    res.redirect("/");
 });
 
 module.exports = router;

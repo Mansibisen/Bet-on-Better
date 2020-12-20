@@ -3,52 +3,28 @@
 
 
 <div>
-    <%= info.userName %>
+    <h3><b>Name:</b> <%= data.basic.name %></h3>
 </div>
-
+<br>
 <div>
     <h3>Past Donations</h3>
 
     <div id="pastDonations">
 
-        <ul id="donation-list"></ul>
-        
+		<% if(data.details.length > 0) { %>
+		<ul>
+			<% data.details.forEach(detail => { %>
+				<li>
+					<h3><%=detail.DonatedTo %> - <%= detail.date %> </h3>
+                    <p> <%= detail.material %> : <%= detail.quantity %>
+				</li>
+			<% }) %>
+		</ul>
+		<% } else { %>
+			<h4 class="text-danger">No Donations</h4>
+		<% } %>
     </div>
 
 </div>
 
-<script>
-    const donList=document.getElementById("donation-list");
-    let id=localStorage.getItem('userId');
-  
-    const getProfile=async searchText=>{
-
-    const res=await fetch(`/donor/profile/${id}`);
-    matches=await res.json();
-    console.log(matches);
-    outputHtml(matches.data.donation); 
-  }; 
-
-    const outputHtml= matches=>{
-        if(matches.length>0){
-            const html=matches.map(
-                item=>`
-                <li>
-                    <h3><%=item.DonatedTo %> - <%= item.date %> </h3>
-                    <p> <%= item.material %> : <%= item.quantity %>
-                </li>
-               `
-            ).join('');
-
-            donList.innerHTML=html;
-        }
-        else{
-          donList.innerHTML=',p> No donations yet </p>';
-        }
-    };
-
-  
-  getProfile();
-
-</script>
 <%-include("partials/footer.ejs")%>

@@ -3,19 +3,17 @@ const { isValidObjectId } = require("mongoose");
 const router = express.Router();
 const Charity = require("../models/Charity");
 const Donor = require("../models/Donor");
+const Donation = require("../models/Donation");
 const { isLoggedIn } = require("../middlewares/fixers");
 
 //router.get('/donor/profile',async(req,res)=>{})
 
 router.get("/", isLoggedIn, (req, res) => {
-	console.log({donorSession: req.session.passport.user});
+	// console.log({donorSession: req.session.passport.user});
     res.render("donorDash");
 });
 router.get("/login", function (req, res) {
     res.render("DonorLogin");
-});
-router.get("/profile", (req, res) => {
-    res.render("donorProfile");
 });
 
 router.get("/charities/all", async (req, res) => {
@@ -112,23 +110,25 @@ router.post("/charityPage/donate", async (req, res) => {
     }
 });
 
-router.get("/profile/:id", async (req, res) => {
-    try {
-        if (isValidObjectId(req.params.id)) {
-            let donorDetails = await Donor.findById(req.params.id);
-            if (!donorDetails) res.status(403).json({ message: "Not Found" });
-            else {
-                donorDetails = { ...donorDetails._doc };
-                delete donorDetails.password;
-                res.status(200).json(donorDetails);
-            }
-        } else {
-            res.status(400).json({ message: "Invalid Id" });
-        }
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ message: "Server error: Try again later" });
-    }
+router.get("/profile", isLoggedIn, async (req, res) => {
+	try {
+		let totalData={};
+		let details;
+		// console.log(req.user);
+		totalData['basic'] = req.user;
+		await Donation.find({ DonatedBy: req.user._id }, (err, detail) => {
+			if(err) throw err;
+			else details = detail;
+		});
+		totalData['details'] = details;
+		console.log(totalData);
+		res.locals.data = totalData;
+		res.render("donorProfile");
+	}
+	catch(err){
+		console.log(err);
+		res.status(500).json({ message: "Server error: Try again later" });
+	}
 });
 
 module.exports = router;
