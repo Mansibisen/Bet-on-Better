@@ -31,7 +31,7 @@ A charity dashboard, where NGOs or other organizations can update their needs, a
    
 <img src="./Screenshots/10.png" alt="donor"/> <br>  
 
-<img src="./Screenshots/12.png" alt="donor"/> <br>  
+<img src="./Screenshots/13.png" alt="donor"/> <br>  
 
 <img src="./Screenshots/14.png" alt="donor"/> <br>  
 
