@@ -43,7 +43,7 @@ A charity dashboard, where NGOs or other organizations can update their needs, a
 - Clone the repo
 - Create a .env file by adding the required details given in .env.example 
 - ```npm i``` to install the dependencies
-- ```node index.js``` to start the server on https://localhost:5000/
+- ```node index.js``` to start the server on http://localhost:5000/
 
 ## Contributors:
 - [Arnav Menon](https://github.com/arnavmenon)
