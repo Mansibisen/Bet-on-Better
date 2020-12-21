@@ -80,14 +80,12 @@ router.get("/charityPage/:id", async (req, res) => {
 router.post("/charityPage/donate", async (req, res) => {
     try {
         let don={};
-        console.log(req.body.reqItem);
         don.material=req.body.reqItem;
         don.quantity=Number(req.body.qty);
         don.description=" ";
         don.DonatedTo=req.body.DonatedTo;
         don.DonatedBy=''+req.user._id;
 
-        console.log(don);
 
         let charID = don.DonatedTo;
         let donID = don.DonatedBy;
@@ -103,14 +101,16 @@ router.post("/charityPage/donate", async (req, res) => {
             $push: { donation: donationID }
         });
 
-        let oldReq=Requirement.find({charityID: don.DonatedTo, material: don.material});
-        let newQuantity;
-        if(oldReq.quantity>don.quantity) newQuantity=oldReq.quantity-don.quantity;
-        else newQuantity=0;
-        console.log(don.material);
-        console.log(newQuantity,oldReq.quantity);
+        Requirement.findOne({charityID: don.DonatedTo, material: don.material},async(err,reqObj)=>{
+            console.log(reqObj);
+            let newQuantity;
+            if(reqObj.quantity>don.quantity) newQuantity=reqObj.quantity-don.quantity;
+            else newQuantity=0;
 
-        let placeholder4=Requirement.findByIdAndUpdate(oldReq._id, {$set :{quantity: newQuantity}});
+            let placeholder4=await Requirement.findByIdAndUpdate(reqObj._id, {$set :{quantity: newQuantity}});
+            if(err) console.log(err);
+        });
+
 
         return res.status(200).redirect('/donor');
     } catch (e) {
