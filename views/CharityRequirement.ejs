@@ -1,0 +1,34 @@
+<%- include("./partials/charityNav.ejs"); %>
+<%- include('./partials/messages.ejs'); %>
+
+<div class="container wrapper">
+  <h1 class="display-3 text-center">Requirements</h1>
+    <% if(data.length == 0) { %>
+      <h4 class="mt-4 text-center"> There are no requirements as of now! <a href="/charity/requirements/add"> Add a requirement? </a> </h4>
+    <% } %>
+    
+    <% data.forEach(function (datum) { %>
+
+        <div class="card mt-4 mb-5 border-dark">
+          <h3 class="card-header text-center">
+            <%= datum.material %>
+          </h3>
+            <div class="card-body">
+              <div class="card-title mb-4"> Description: <strong> <%= datum.description %> </strong> </div>
+              <div class="card-title mb-4"> Quantity: <strong> <%= datum.quantity %> </strong> </div>
+              <br> <hr>
+              <a href="/charity/requirements/update/<%= datum.id %>" class="btn btn-info btn-lg mr-2">Update</a>
+              <form action="/charity/<%= datum.id %>?_method=DELETE" method="POST" class="d-inline">
+                  <button type="submit" class="btn btn-danger btn-lg">Delete</button>
+              </form>
+            </div>
+            <div class="card-footer mb-2"> Added on : <strong> <%= datum.createdDate.toLocaleDateString() %> </strong>
+              <div class="float-right"> Added by: <strong> You </strong> </div>
+            </div>
+        </div>
+
+    <% }) %>
+    <div class="push"></div>
+</div>
+
+<%-include("partials/footer.ejs")%>

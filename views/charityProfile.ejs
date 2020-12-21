@@ -1,0 +1,30 @@
+<%- include("./partials/charityNav.ejs"); %>
+<%- include('./partials/messages.ejs')%>
+
+<div class="container d-flex flex-column align-items-center w-100 wrapper">
+	<h3 class="text-center display-3"> Profile </h3>
+	<br>
+	<div class="row w-100 align-items-center justify-content-center">
+		<div class="col-sm-7 col-md-5 w-100 text-center">
+			<img src=<%= img %> class="rounded-circle w-75 mb-2" alt="User Image">
+		</div>
+		<form action="/charity/update" class="col-sm-5 col-md-7" method="POST">
+			<div class="form-group">
+				<% for(let userDetail in data) { %>
+					<label><%= userDetail[0].toUpperCase()+userDetail.slice(1) %></label>
+					<% if(userDetail == 'contact') { %>
+						<input required type="number" class="form-control mb-3" id=<%= userDetail %> name=<%= userDetail %> value=<%= data[userDetail] %> >
+					<% } else if(userDetail == 'email') { %>
+						<input disabled type="email" class="form-control mb-3" id=<%= userDetail %> name=<%= userDetail %> value=<%= data[userDetail] %> >
+					<% } else { %>
+						<input required type="text" class="form-control mb-3" id=<%= userDetail %> name=<%= userDetail %> value=<%= data[userDetail] %> >
+					<% } %>
+				<% } %>
+				<button type="submit" class="btn btn-success w-100">Update</button>
+			</div>
+		</form>
+	</div>
+	<div class="push"></div>
+</div>
+
+<%- include('./partials/footer.ejs')%>

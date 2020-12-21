@@ -1,0 +1,102 @@
+<%- include('./partials/donorNav'); %> 
+
+<div class="container wrapper">
+    
+<div class="my-3">
+    <h2><%= info.name %></h2>
+
+    <p><b>Address :</b><%=info.address%></p>
+    <p><b>Contact Number :</b><%=info.contact%></p>
+</div>
+
+ 
+<% if(req.length>0){ %>
+
+    <div class="my-5">
+            <h2>Requirements</h2>
+            
+            <ul>
+            <% req.forEach(item=>{ %>
+           
+                <li>
+                    <h4><%=item.material %> : <%=item.quantity %></h4>
+                    <p><%= item.description %></p>
+                </li>
+        
+            <%  }) %>
+            <button id="donateBtn">Donate Now!</button>
+    <% } else { %>
+            <p>No requirements presently. Kindly browse other charities</p>
+    <% } %>
+            </ul>
+    </div>
+    <br>
+    <hr>
+    <br>
+
+<div id="donationBox" style="margin-bottom: 5%;">
+    <h3>Donation</h3>
+
+    <form id="donationForm" action="/donor/charityPage/donate" method="POST">
+
+        <input type="hidden" name="DonatedTo" value="<%=info.id%>">
+
+        <label for="reqItem">Select a material : </label>
+
+        <select name="reqItem" id="reqItem">
+        <% req.forEach(item=>{ %>
+   
+            <option value="<%=item.material %>"><%= item.material%></option>
+            <div id="item-desc"><%=item.description%></div>
+            
+            <%  }) %> 
+
+            </select>
+            &nbsp&nbspQuantity: <input type="number" name="qty" value="1" id="qty" min=1>
+
+            <button type="submit">
+                + Donate Item
+            </button>
+
+        </form>
+
+        
+</div>
+    <div class="push"></div>
+</div>
+
+<script>
+    //const addItem=document.getElementById("addItem");
+    const donateBtn=document.getElementById("donateBtn");
+    const donationItem={};
+    donateBtn.addEventListener('click',()=>{
+        document.getElementById("donationBox").style.display="block";
+    })
+     /* addItem.addEventListener('click',async(e)=>{
+
+    e.preventDefault();
+
+    donationItem.material=document.getElementById("reqItem").value;
+    donationItem.quantity=Number(document.getElementById("qty").value);
+    donationItem.description="";
+
+    console.log(donationItem);
+
+    try {
+        const res = await fetch('/donor/charityPage/donate', { 
+          method: 'POST', 
+          body: donationItem,
+          //headers: {'Content-Type': 'application/json'}
+        });
+        data = await res.json();
+        console.log(data);
+  
+      }
+    catch (err) {
+        console.log(err);
+      }
+    })  */
+    
+    
+</script>
+<%-include("partials/footer.ejs")%>

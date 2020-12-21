@@ -1,0 +1,21 @@
+html, body 
+{
+    height: 100%;
+    margin: 0;
+}
+.wrapper {
+    min-height: 100%;
+    margin-bottom: -80px;
+}
+.footer,
+.push {
+  height: 50px;
+}
+.footer {
+    background-color: rgb(48, 48, 48);
+    color: white;
+    text-align: center;
+    font-size: 1.25rem;
+    width: 100%;
+}
+  
