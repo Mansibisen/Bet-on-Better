@@ -1,7 +1,7 @@
 <%- include('./partials/donorNav'); %> 
 
 <div class="container wrapper">
-
+    
 <div>
     <%= info.name %>
 </div>
@@ -9,7 +9,7 @@
  
 <% if(req.length>0){ %>
 
-        <div>
+    <div>
             <h2>Requirements</h2>
             
             <ul>
@@ -21,25 +21,15 @@
                 </li>
         
             <%  }) %>
-        
             <button id="donateBtn">Donate Now!</button>
     <% } else { %>
             <p>No requirements presently. Kindly browse other charities</p>
     <% } %>
-
+            </ul>
+    </div>
     <br>
     <hr>
     <br>
-
-    <div id="donationBox">
-        <h3>Donation</h3>
-
-        <form id="donationForm">
-            <label for="reqItem">Select a material : </label>
-
-<br>
-<hr>
-<br>
 
 <div id="donationBox">
     <h3>Donation</h3>
@@ -64,45 +54,44 @@
         <button id="addItem">
             + Add item to donation list
         </button>
-    </div>
-    <div class="push"></div>
-    <script>
-        const addItem=document.getElementById("addItem");
-        const donateBtn=document.getElementById("donateBtn");
-        const donationItems=[];
-        donateBtn.addEventListener('click',()=>{
-            document.getElementById("donationBox").style.display="block";
-        })
-        addItem.addEventListener('click',()=>{
-            let material=document.getElementById("reqItem").value;
-            let quantity=Number(document.getElementById("qty").value);
-            let flag=0;
-            if(quantity<1){
-                alert('Please enter a valid quantity');
-                flag=-1;
-            }
-            if(flag!=-1)
-            {
-                for(let i=0;i<donationItems.length;i++)
-                {
-                    if(donationItems[i].material==material)
-                        {
-                            donationItems[i].quantity+=quantity;
-                            flag=1;
-                            break;
-                        }
-                }
-                if(!flag){
-                    var donjson={
-                            "material": `${material}`,
-                            "quantity": quantity
-                    };
-                    donationItems.push(donjson);
-                }
-        }
-        })
-        
-    </script>
 </div>
-
+    <div class="push"></div>
+</div>
+<script>
+    const addItem=document.getElementById("addItem");
+    const donateBtn=document.getElementById("donateBtn");
+    const donationItems=[];
+    donateBtn.addEventListener('click',()=>{
+        document.getElementById("donationBox").style.display="block";
+    })
+    addItem.addEventListener('click',()=>{
+        let material=document.getElementById("reqItem").value;
+        let quantity=Number(document.getElementById("qty").value);
+        let flag=0;
+        if(quantity<1){
+            alert('Please enter a valid quantity');
+            flag=-1;
+        }
+        if(flag!=-1)
+        {
+            for(let i=0;i<donationItems.length;i++)
+            {
+                if(donationItems[i].material==material)
+                    {
+                        donationItems[i].quantity+=quantity;
+                        flag=1;
+                        break;
+                    }
+            }
+            if(!flag){
+                var donjson={
+                        "material": `${material}`,
+                        "quantity": quantity
+                };
+                donationItems.push(donjson);
+            }
+    }
+    })
+    
+</script>
 <%-include("partials/footer.ejs")%>
