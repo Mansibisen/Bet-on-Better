@@ -21,14 +21,18 @@ At our interface, a donor is free to donate the stuff he wants to the nearest ne
 A donor dashboard, where users can search for necessary requirements related to the materials they are willing to donate. They can also locate the charity organizations and get to know their requirements.  
   
 <img src="./Screenshots/5.png" alt="donor"/> <br>  
+
 <img src="./Screenshots/6.png" alt="donor"/> <br>  
+
 <img src="./Screenshots/7.png" alt="donor"/> <br>
 
 ### CHARITY:  
 A charity dashboard, where NGOs or other organizations can update their needs, according to which the materials from willing donors will be supplied to them.  
    
 <img src="./Screenshots/10.png" alt="donor"/> <br>  
+
 <img src="./Screenshots/12.png" alt="donor"/> <br>  
+
 <img src="./Screenshots/14.png" alt="donor"/> <br>  
 
 ## Technology Stack:
