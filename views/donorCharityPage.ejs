@@ -3,13 +3,16 @@
 <div class="container wrapper">
     
 <div>
-    <%= info.name %>
+    <h2><%= info.name %></h2>
+
+    <p><b>Address :</b><%=info.address%></p>
+    <p><b>Contact Number :</b><%=info.contact%></p>
 </div>
 
  
 <% if(req.length>0){ %>
 
-    <div>
+    <div class="my-5">
             <h2>Requirements</h2>
             
             <ul>
@@ -34,62 +37,66 @@
 <div id="donationBox">
     <h3>Donation</h3>
 
-    <form id="donationForm">
+    <form id="donationForm" action="/donor/charityPage/donate" method="POST">
+
+        <input type="hidden" name="DonatedTo" value="<%=info.id%>">
+
         <label for="reqItem">Select a material : </label>
 
         <select name="reqItem" id="reqItem">
         <% req.forEach(item=>{ %>
    
-            <option value="<%=item %>"><%= item.material%></option>
+            <option value="<%=item.material %>"><%= item.material%></option>
+            <div id="item-desc"><%=item.description%></div>
             
             <%  }) %> 
 
             </select>
             &nbsp&nbspQuantity: <input type="number" name="qty" value="1" id="qty" min=1>
 
+            <button type="submit">
+                + Donate Item
+            </button>
+
         </form>
 
-        <button id="addItem">
-            + Add item to donation list
-        </button>
+        
 </div>
     <div class="push"></div>
 </div>
+
 <script>
-    const addItem=document.getElementById("addItem");
+    //const addItem=document.getElementById("addItem");
     const donateBtn=document.getElementById("donateBtn");
-    const donationItems=[];
+    const donationItem={};
     donateBtn.addEventListener('click',()=>{
         document.getElementById("donationBox").style.display="block";
     })
-    addItem.addEventListener('click',()=>{
-        let material=document.getElementById("reqItem").value;
-        let quantity=Number(document.getElementById("qty").value);
-        let flag=0;
-        if(quantity<1){
-            alert('Please enter a valid quantity');
-            flag=-1;
-        }
-        if(flag!=-1)
-        {
-            for(let i=0;i<donationItems.length;i++)
-            {
-                if(donationItems[i].material==material)
-                    {
-                        donationItems[i].quantity+=quantity;
-                        flag=1;
-                        break;
-                    }
-            }
-            if(!flag){
-                var donjson={
-                        "material": `${material}`,
-                        "quantity": quantity
-                };
-                donationItems.push(donjson);
-            }
-    }
-    })
+     /* addItem.addEventListener('click',async(e)=>{
+
+    e.preventDefault();
+
+    donationItem.material=document.getElementById("reqItem").value;
+    donationItem.quantity=Number(document.getElementById("qty").value);
+    donationItem.description="";
+
+    console.log(donationItem);
+
+    try {
+        const res = await fetch('/donor/charityPage/donate', { 
+          method: 'POST', 
+          body: donationItem,
+          //headers: {'Content-Type': 'application/json'}
+        });
+        data = await res.json();
+        console.log(data);
+  
+      }
+    catch (err) {
+        console.log(err);
+      }
+    })  */
+    
     
 </script>
 <%-include("partials/footer.ejs")%>

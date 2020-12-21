@@ -20,8 +20,8 @@
 				<ul>
 					<% data.details.forEach(detail => { %>
 						<li>
-							<h3><%=detail.DonatedTo %> - <%= detail.date %> </h3>
-							<p> <%= detail.material %> : <%= detail.quantity %>
+							<h3><%= detail.material %> : <%= detail.quantity %></h3>
+							<p> <%= detail.date %> </p>
 						</li>
 					<% }) %>
 				</ul>

@@ -67,7 +67,7 @@ router.get("/charityPage/:id", async (req, res) => {
         let user = req.user;
         char = await Charity.findById(chID);
         reqList = await Requirement.find({charityID: chID})
-        console.log(reqList);
+        //console.log(reqList);
         return res.status(200).render("donorCharityPage", { user: user, info: char, req: reqList });
     } catch (e) {
         console.log(e);
@@ -79,34 +79,40 @@ router.get("/charityPage/:id", async (req, res) => {
 
 router.post("/charityPage/donate", async (req, res) => {
     try {
-        let don = req.body;
+        let don={};
+        console.log(req.body.reqItem);
+        don.material=req.body.reqItem;
+        don.quantity=Number(req.body.qty);
+        don.description=" ";
+        don.DonatedTo=req.body.DonatedTo;
+        don.DonatedBy=''+req.user._id;
+
+        console.log(don);
+
         let charID = don.DonatedTo;
         let donID = don.DonatedBy;
-        let C = Charity.findById({ charID });
 
-        //let D=Donor.findById({donID});
-        //let placeholder1=await Charity.findByIdAndUpdate(charID,{$push: {donation: don}});
-
-        let placeholder1 = await Donor.findByIdAndUpdate(donID, {
-            $push: { donation: don },
-        });
-
-        let newReq = C.requirements;
-        for (let i = 0; i <= newReq.length; i++) {
-            if (newReq.material == don.material) {
-                if (newReq.quantity > don.quantity)
-                    newReq.quantity = newReq.quantity - don.quantity;
-                else newReq.quantity = 0;
-                break;
-            }
-        }
+        let placeholder1 = await Donation.create(don);
+        let donationID=''+placeholder1._id
 
         let placeholder2 = await Charity.findByIdAndUpdate(charID, {
-            requirements: newReq,
-            $push: { donation: don },
+            $push: { donation: donationID }
         });
 
-        return res.status(200).json({ message: "Donation Successful" });
+        let placeholder3 = await Donor.findByIdAndUpdate(donID, {
+            $push: { donation: donationID }
+        });
+
+        let oldReq=Requirement.find({charityID: don.DonatedTo, material: don.material});
+        let newQuantity;
+        if(oldReq.quantity>don.quantity) newQuantity=oldReq.quantity-don.quantity;
+        else newQuantity=0;
+        console.log(don.material);
+        console.log(newQuantity,oldReq.quantity);
+
+        let placeholder4=Requirement.findByIdAndUpdate(oldReq._id, {$set :{quantity: newQuantity}});
+
+        return res.status(200).redirect('/donor');
     } catch (e) {
         console.log(e);
         return res
