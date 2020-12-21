@@ -84,9 +84,7 @@ router.post("/charityPage/donate", async (req, res) => {
         don.quantity=Number(req.body.qty);
         don.description=" ";
         don.DonatedTo=req.body.DonatedTo;
-        don.DonatedBy=''+req.user._id;
-
-
+        don.DonatedBy=req.user._id;
         let charID = don.DonatedTo;
         let donID = don.DonatedBy;
 

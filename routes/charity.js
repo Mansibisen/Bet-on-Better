@@ -8,7 +8,7 @@ const Donation = require("../models/Donation");
 const { isValidObjectId } = require("mongoose");
 const { isLoggedIn } = require("../middlewares/fixers");
 const Gravatar = require("gravatar-api");
-
+const Donor = require("../models/Donor");
 router.get("/login", function (req, res) {
   res.render("CharityLogin");
 });
@@ -49,12 +49,16 @@ router.get("/", isLoggedIn, async (req, res) => {
     let user = req.user;
     let totalDonationsID = user.donation;
     let value;
+    let donor;
     let totalDonation = [];
+    let totalDonors = [];
     console.log("ids", totalDonationsID);
     if (totalDonationsID.length > 0) {
       await totalDonationsID.forEach(async (donation, index) => {
         value = await Donation.findById(donation);
         totalDonation.push(value);
+        donor = await Donor.findById(value.DonatedBy);
+        totalDonors.push(donor.name);
         if (index === totalDonationsID.length - 1) {
          console.log(
             "from route ",
@@ -62,6 +66,7 @@ router.get("/", isLoggedIn, async (req, res) => {
           );
           return res.render("charityDashboard", {
             data: totalDonation,
+            names:totalDonors
           });
         }
       });
