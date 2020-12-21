@@ -13,10 +13,8 @@ router.get("/login", function (req, res) {
   res.render("CharityLogin");
 });
 router.get("/requirements", isLoggedIn, async (req, res) => {
-  console.log({ charitySession: req.session.passport.user });
   try {
     let user = req.user;
-    console.log(user);
     let totalRequirementsID = user.requirements;
     let value;
     let totalRequirements = [];
@@ -31,7 +29,6 @@ router.get("/requirements", isLoggedIn, async (req, res) => {
           });
         }
       });
-      console.log("Req: ", totalRequirements);
     } else {
       return res.render("CharityRequirement", {
         user: user,
@@ -52,7 +49,6 @@ router.get("/", isLoggedIn, async (req, res) => {
     let donor;
     let totalDonation = [];
     let totalDonors = [];
-    console.log("ids", totalDonationsID);
     if (totalDonationsID.length > 0) {
       await totalDonationsID.forEach(async (donation, index) => {
         value = await Donation.findById(donation);
@@ -60,10 +56,6 @@ router.get("/", isLoggedIn, async (req, res) => {
         donor = await Donor.findById(value.DonatedBy);
         totalDonors.push(donor.name);
         if (index === totalDonationsID.length - 1) {
-         console.log(
-            "from route ",
-            totalDonation
-          );
           return res.render("charityDashboard", {
             data: totalDonation,
             names:totalDonors
@@ -71,7 +63,6 @@ router.get("/", isLoggedIn, async (req, res) => {
         }
       });
     } else {
-      console.log("from route ", totalDonation);
       return res.render("charityDashboard", { user: user, data: totalDonation });
     }
   } catch (e) {
@@ -104,7 +95,6 @@ router.post("/requirements", async (req, res) => {
       charityUser = await charityUser.save();
       req.flash("success_msg", "Requirement added successfully!");
       res.redirect("/charity/requirements");
-      console.log("Charity user", charityUser);
     }
   });
 });
@@ -129,7 +119,6 @@ router.delete("/:id", async (req, res) => {
   let charityUser = await Charity.findById(req.user.id);
   let i = charityUser.requirements.indexOf(reqID.id);
   charityUser.requirements.splice(i, 1);
-  console.log(charityUser);
   charityUser = await charityUser.save();
   req.flash("error_msg", "The requirement has been removed");
   res.redirect("/charity/requirements");

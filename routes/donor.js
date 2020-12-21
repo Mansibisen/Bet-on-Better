@@ -67,7 +67,6 @@ router.get("/charityPage/:id", async (req, res) => {
         let user = req.user;
         char = await Charity.findById(chID);
         reqList = await Requirement.find({charityID: chID})
-        //console.log(reqList);
         return res.status(200).render("donorCharityPage", { user: user, info: char, req: reqList });
     } catch (e) {
         console.log(e);
@@ -100,7 +99,6 @@ router.post("/charityPage/donate", async (req, res) => {
         });
 
         Requirement.findOne({charityID: don.DonatedTo, material: don.material},async(err,reqObj)=>{
-            console.log(reqObj);
             let newQuantity;
             if(reqObj.quantity>don.quantity) newQuantity=reqObj.quantity-don.quantity;
             else newQuantity=0;
