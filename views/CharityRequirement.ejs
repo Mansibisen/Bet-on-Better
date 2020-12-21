@@ -2,13 +2,14 @@
 <%- include("./partials/charityNav.ejs"); %>
 
 <div class="container wrapper">
+  <h1 class="display-3 text-center">Requirements</h1>
     <% if(data.length == 0) { %>
       <h4 class="mt-4 text-center"> There are no requirements as of now! <a href="/charity/requirements/add"> Add a requirement? </a> </h4>
     <% } %>
-
+    
     <% data.forEach(function (datum) { %>
 
-        <div class="card mt-4 mb-4 border-dark">
+        <div class="card mt-4 mb-5 border-dark">
           <h3 class="card-header text-center">
             <%= datum.material %>
           </h3>

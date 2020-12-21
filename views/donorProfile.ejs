@@ -17,7 +17,7 @@
 			<h3>Past Donations</h3><hr>
 			<div id="pastDonations">
 				<% if(data.details.length > 0) { %>
-				<ul>
+				<ul style="margin-bottom: 4rem;">
 					<% data.details.forEach(detail => { %>
 						<li>
 							<h3><%= detail.material %> : <%= detail.quantity %></h3>

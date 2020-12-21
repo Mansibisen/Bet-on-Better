@@ -109,10 +109,11 @@ router.post("/charityPage/donate", async (req, res) => {
             if(err) console.log(err);
         });
 
-
+        req.flash("success_msg","Item Donated Successfully");
         return res.status(200).redirect('/donor');
     } catch (e) {
         console.log(e);
+        req.flash("error_msg",e.message);
         return res
             .status(500)
             .json({ message: "Server error: Try again later" });
