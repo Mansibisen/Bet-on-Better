@@ -11,7 +11,7 @@
 					<% if(detail == 'contact') {%>
 						<input required type="number" class="form-control mb-3" id=<%= detail %> name=<%= detail %>  value=<%= data.basic[detail] %> >
 					<% } else if(detail == 'email') {%>
-						<input required type="email" class="form-control mb-3" id=<%= detail %> name=<%= detail %> value=<%= data.basic[detail] %> >
+						<input disabled type="email" class="form-control mb-3" id=<%= detail %> name=<%= detail %> value=<%= data.basic[detail] %> >
 					<% } else { %>
 						<input required type="text" class="form-control mb-3" id=<%= detail %> name=<%= detail %> value=<%= data.basic[detail] %> >
 				<% }} %>
@@ -22,11 +22,11 @@
 			<h3>Past Donations</h3><hr>
 			<div id="pastDonations">
 				<% if(data.details.length > 0) { %>
-				<ul style="margin-bottom: 4rem;">
+				<ul style="margin-bottom: 4rem;" class="list-group">
 					<% data.details.forEach(detail => { %>
-						<li>
-							<h3><%= detail.material %> : <%= detail.quantity %></h3>
-							<p> <%= detail.date %> </p>
+						<li class="list-group-item">
+							<h4>Item: <span class="text-primary"><%= detail.material %></span> | Qty: <span class="text-primary"><%= detail.quantity %></span></h4>
+							<p class="text-info"> <%= detail.date %> </p>
 						</li>
 					<% }) %>
 				</ul>
