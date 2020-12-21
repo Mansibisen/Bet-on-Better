@@ -1,21 +1,22 @@
 {
   "name": "inout",
   "version": "1.0.0",
-  "description": "A donation portal",
+  "description": "A donation portal with donor and charity routes",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/subramanian-vv/Inout.git"
+    "url": "git+https://github.com/subramanian-vv/Bet-on-Better.git"
   },
-  "author": "",
+  "author": "Subramanian V V",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/subramanian-vv/Inout/issues"
+    "url": "https://github.com/subramanian-vv/Bet-on-Better/issues"
   },
-  "homepage": "https://github.com/subramanian-vv/Inout#readme",
+  "homepage": "https://github.com/subramanian-vv/Bet-on-Better#readme",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
