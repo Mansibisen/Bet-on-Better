@@ -120,6 +120,29 @@ router.post("/charityPage/donate", async (req, res) => {
     }
 });
 
+router.post("/update", isLoggedIn, async (req, res) => {
+	try {
+		const userId = req.user.id;
+		const body = req.body;
+		await Donor.findByIdAndUpdate(userId, body, (err, up) => {
+			if(err) {
+				console.log(err);
+				req.flash("error_msg", err.message);
+				return res.status(500).json({ message: "Server error: Try again later" });
+			}
+			else {
+				req.flash("success_msg", "Profile Updated!!!");
+				return res.status(200).redirect("/donor/profile");
+			}
+		});
+	}
+	catch (e) {
+		console.log(e);
+        req.flash("error_msg",e.message);
+        return res.status(500).json({ message: "Server error: Try again later" });
+	}
+});
+
 router.get("/profile", isLoggedIn, async (req, res) => {
 	try {
 		let user = req.user._doc;
