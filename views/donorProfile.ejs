@@ -5,7 +5,7 @@
 	<div class="row mt-3">
 		<form action="/donor/update" class="col-sm-6" method="POST">
 			<div class="form-group">
-				<h3>Profile</h3><hr>
+				<h3 class="display-3">Profile</h3><hr>
 				<% for(let detail in data.basic) { %>
 					<label><%= detail[0].toUpperCase()+detail.slice(1) %></label>
 					<% if(detail == 'contact') {%>
@@ -19,14 +19,14 @@
 			</div>
 		</form>
 		<div class="text-center col-sm-6">
-			<h3>Past Donations</h3><hr>
+			<h3 class="display-3">Past Donations</h3><hr>
 			<div id="pastDonations">
 				<% if(data.details.length > 0) { %>
 				<ul style="margin-bottom: 4rem;" class="list-group">
 					<% data.details.forEach(detail => { %>
 						<li class="list-group-item">
 							<h4>Item: <span class="text-primary"><%= detail.material %></span> | Qty: <span class="text-primary"><%= detail.quantity %></span></h4>
-							<p class="text-info"> <%= detail.date %> </p>
+							<p class="text-info">Date: <%= detail.date.toLocaleDateString() %> </p>
 						</li>
 					<% }) %>
 				</ul>
